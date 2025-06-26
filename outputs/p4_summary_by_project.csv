@@ -1,0 +1,3 @@
+Project,Total Issues,Issues with Commits,Total Commits Found,Avg Commits per Issue,Most Common Status,Most Common Priority
+ZooKeeper,26,26,62,2.38,Closed,Blocker
+HBase,67,67,248,3.7,Closed,Major
