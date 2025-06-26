@@ -3,6 +3,9 @@ import json
 import sys
 from pathlib import Path
 
+from src.statistics import analyze_issues_by_project
+
+
 def has_deleted_chunks(commit):
     """Check if a commit contains only ADDED chunks (no DELETE or other change types)"""
     for file in commit.get('files_changed', {}).get('files', []):
