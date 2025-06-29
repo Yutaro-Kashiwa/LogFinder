@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-from src.statistics import analyze_issues_by_project
+from pathlib import Path
 
+from src.statistics import analyze_issues_by_project
+import json
 
 def find_issues_with_log_attachments():
     # Read the issues file

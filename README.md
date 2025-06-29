@@ -1,6 +1,10 @@
 # LogFinder
 
 A comprehensive tool for analyzing JIRA issues with log attachments and finding related Git commits.
+## Preparation
+- Download issues from JIRA
+https://issues.apache.org/jira/browse/HBASE-29041?jql=project%20%3D%20HBASE%20AND%20issuetype%20%3D%20Bug%20AND%20priority%20in%20(Minor%2C%20Trivial)%20AND%20affectedVersion%20in%20releasedVersions()%20AND%20fixVersion%20in%20releasedVersions()
+
 
 ## Overview
 

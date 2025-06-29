@@ -13,7 +13,7 @@ def parse_date(date_str):
         return None
 
 
-def analyze_issues_by_project(input_file = "outputs/p2_issues_with_logs.json"):
+def analyze_issues_by_project(input_file = "p2_issues_with_logs"):
     if not Path(input_file).exists():
         print(f"Error: {input_file} not found.")
         return
