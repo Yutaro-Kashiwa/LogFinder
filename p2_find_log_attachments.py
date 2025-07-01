@@ -29,6 +29,8 @@ def find_issues_with_log_attachments():
                 if isinstance(attachment, dict) and "filename" in attachment:
                     if "log" in attachment["filename"].lower():
                         log_attachments.append(attachment)
+                    elif attachment["filename"].lower().endswith(".txt"):
+                        log_attachments.append(attachment)
             
             if log_attachments:
                 # Create a simplified issue entry with only relevant info

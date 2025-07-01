@@ -10,7 +10,7 @@ from typing import Dict, List, Set
 csv.field_size_limit(sys.maxsize)
 
 def process_logs():
-    base_path = Path("inputs/logs")
+    base_path = Path("inputs/issues")
     all_entries = []
     seen_keys = set()
     
