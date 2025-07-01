@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Create test data by identifying which lines in the affected version are changed by fix commits.
-Uses git blame --reverse to identify the last change between the affected version and fix revision.
+Uses git diff with rename detection to map changes between affected versions and fix commits.
 """
 import git
 import sys
@@ -123,319 +123,261 @@ class RepositoryValidator:
         return missing
 
 
-class GitBlameReverseAnalyzer:
-    """Use git blame --reverse to map lines from affected version to fix commit."""
+class GitDiffAnalyzer:
+    """Use git diff to find changes between affected version and fix commit."""
     
-    def __init__(self, repo: git.Repo):
+    def __init__(self, repo: git.Repo, project:str):
         self.repo = repo
         self.version_resolver = VersionResolver(repo)
+        self.project = project
     
-    @handle_git_errors("Checkout version")
-    def checkout_version(self, version: str) -> bool:
-        """Checkout a specific version/tag."""
-        version_sha = self.version_resolver.resolve(version)
-        if version_sha:
-            self.repo.git.checkout(version_sha)
-            return True
-        else:
-            print(f"\nWarning: Could not resolve version {version}")
-            return False
+    @handle_git_errors("Checkout commit")
+    def checkout_commit(self, commit_sha: str) -> bool:
+        """Checkout a specific commit."""
+        self.repo.git.checkout(commit_sha)
+        return True
     
-    def get_changed_lines_in_affected_version(self, file_path: str, fix_commit_sha: str, 
-                                            affected_version: str, file_changes: Dict[str, Any], parent_commit_sha: str) -> List[Dict[str, Any]]:
-        """
-        Use git blame --reverse to find which lines in affected version were changed by fix commit.
-        Returns list of line numbers in affected version that were modified.
-        """
-        affected_version_sha = self.version_resolver.resolve(affected_version)
-        if not affected_version_sha:
-            print(f"\n  Warning: Could not resolve version {affected_version} to SHA")
-            return []
+    def parse_diff_output(self, diff_output: str) -> Dict[str, Any]:
+        """Parse git diff output to extract changed lines."""
+        results = {}
+        current_file = None
+        current_old_start = 0
+        current_new_start = 0
+        deleted_lines = []
+        added_lines = []
         
-        try:
-            # Check if file exists in affected version
-            if not self._file_exists_at_commit(file_path, affected_version_sha):
-                return []
-            
-            # Get the file content at affected version
-            file_lines = self._get_file_at_commit(file_path, affected_version_sha)
-            if not file_lines:
-                return []
-            
-            # Run git blame --reverse to find last modifications between affected version and fix
-            blame_data = self._run_reverse_blame(file_path, affected_version_sha, fix_commit_sha)
-            
-            # Map the changes from fix commit to lines in affected version
-            changed_lines = self._map_changes_to_affected_version(
-                blame_data, file_changes, file_lines, fix_commit_sha, parent_commit_sha
-            )
-            
-            return changed_lines
-            
-        except Exception as e:
-            print(f"\n  Error analyzing {file_path}: {e}")
-            return []
-    
-    def _file_exists_at_commit(self, file_path: str, commit_sha: str) -> bool:
-        """Check if file exists at specific commit."""
-        try:
-            commit = self.repo.commit(commit_sha)
-            commit.tree[file_path]
-            return True
-        except (KeyError, AttributeError):
-            return False
-    
-    def _get_file_at_commit(self, file_path: str, commit_sha: str) -> List[str]:
-        """Get file content at specific commit."""
-        try:
-            commit = self.repo.commit(commit_sha)
-            file_content = commit.tree[file_path].data_stream.read().decode('utf-8', errors='ignore')
-            return file_content.splitlines()
-        except:
-            return []
-    
-    @handle_git_errors("Reverse blame")
-    def _run_reverse_blame(self, file_path: str, start_sha: str, end_sha: str) -> Optional[Dict[int, Dict[str, Any]]]:
-        """Run git blame --reverse and parse output."""
-        # Run blame --reverse from affected version to fix commit
-        blame_output = self.repo.git.blame(
-            '--reverse',
-            '--porcelain',
-            f'{start_sha}..{end_sha}',
-            file_path
-        )
-        print("git blame", '--reverse', '--porcelain', f'{start_sha}..{end_sha}',file_path)
-        return self._parse_reverse_blame_output(blame_output)
-    
-    def _parse_reverse_blame_output(self, blame_output: str) -> Dict[int, Dict[str, Any]]:
-        """Parse git blame --reverse output."""
-        blame_data = {}
-        lines = blame_output.strip().split('\n')
-        
-        i = 0
-        while i < len(lines):
-            line = lines[i]
-            
-            # Parse commit line
-            if re.match(r'^[0-9a-f]{40}', line):
-                parts = line.split()
-                if len(parts) >= 3:
-                    commit_sha = parts[0]
-                    original_line = int(parts[1])  # Line in start commit (affected version)
-                    final_line = int(parts[2])      # Line in end commit (fix commit)
-                    
-                    # Extract metadata
-                    author = None
-                    author_time = None
-                    summary = None
-                    
-                    # Read metadata lines
-                    j = i + 1
-                    while j < len(lines) and not lines[j].startswith('\t'):
-                        if lines[j].startswith('author '):
-                            author = lines[j][7:]
-                        elif lines[j].startswith('author-time '):
-                            author_time = int(lines[j][12:])
-                        elif lines[j].startswith('summary '):
-                            summary = lines[j][8:]
-                        j += 1
-                    
-                    # Get the actual line content
-                    if j < len(lines) and lines[j].startswith('\t'):
-                        line_content = lines[j][1:]
-                        
-                        blame_data[final_line] = {
-                            'commit': commit_sha,
-                            'original_line': original_line,
-                            'final_line': final_line,
-                            'author': author,
-                            'author_time': author_time,
-                            'date': datetime.fromtimestamp(author_time).isoformat() if author_time else None,
-                            'summary': summary,
-                            'content': line_content
-                        }
-                    
-                    i = j
-                    continue
-            
-            i += 1
-        
-        return blame_data
-    
-    def _map_changes_to_affected_version(self, blame_data: Dict[int, Dict[str, Any]], 
-                                       file_changes: Dict[str, Any], file_lines: List[str],
-                                       fix_commit_sha: str, parent_commit_sha: str) -> List[Dict[str, Any]]:
-        """Map fix commit changes back to lines in affected version."""
-        changed_lines = []
-        
-        # Process each chunk of changes in the fix commit
-        for chunk in file_changes.get('chunks', []):
-            # For each deleted/modified line in the chunk
-            line_offset = 0
-            for change in chunk.get('changes', []):
-                if change['type'] in ['DELETE', 'MODIFY']:
-                    # Calculate line number in parent of fix commit
-                    parent_line = chunk['old_start'] + line_offset
-                    
-                    # Find corresponding line in affected version using blame data
-                    for final_line, blame_info in blame_data.items():
-                        # Check if this blame entry corresponds to our change
-                        if blame_info['commit'] == parent_commit_sha:
-                            original_line = blame_info['original_line']
-                            
-                            # Get content from affected version
-                            content = ''
-                            if 0 < original_line <= len(file_lines):
-                                content = file_lines[original_line - 1]
-                            
-                            changed_lines.append({
-                                'line_number_in_affected_version': original_line,
-                                'content_in_affected_version': content,
-                                'change_type': change['type'],
-                                'changed_by_commit': fix_commit_sha,
-                            })
-                            break
+        for line in diff_output.split('\n'):
+            # File header
+            if line.startswith('diff --git'):
+                # Save previous file results
+                if current_file and deleted_lines:
+                    results[current_file] = {
+                        'deleted_lines': deleted_lines,
+                        'added_lines': added_lines
+                    }
+                # Reset for new file
+                current_file = None
+                deleted_lines = []
+                added_lines = []
                 
-                if change['type'] != 'ADD':
-                    line_offset += 1
+            # Extract filename from --- or +++ lines
+            elif line.startswith('--- a/'):
+                current_file = line[6:]
+            elif line.startswith('--- /dev/null'):
+                current_file = None  # New file, skip
+            elif line.startswith('+++ b/') and not current_file:#TODO: いる？
+                current_file = line[6:]  # For renamed files
+                
+            # Hunk header
+            elif line.startswith('@@'):
+                match = re.match(r'@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@', line)
+                if match:
+                    current_old_start = int(match.group(1))
+                    current_new_start = int(match.group(2))
+                    line_offset = 0
+                    
+            # Deleted line
+            elif line.startswith('-') and not line.startswith('---'):
+                if current_file:
+                    deleted_lines.append({
+                        'line_number': current_old_start + line_offset,
+                        'content': line[1:]
+                    })
+                line_offset += 1
+                
+            # Added line
+            elif line.startswith('+') and not line.startswith('+++'):
+                if current_file:
+                    added_lines.append({
+                        'line_number': current_new_start + len(added_lines),
+                        'content': line[1:]
+                    })
+            
+            # Context line
+            elif line.startswith(' '):
+                line_offset += 1
         
-        return changed_lines
-
-
-class CommitAnalyzer:
-    """Analyze fix commits to find changed lines in affected versions."""
-    
-    def __init__(self, analyzer: GitBlameReverseAnalyzer):
-        self.analyzer = analyzer
-    
-    def analyze_commit(self, commit_data: Dict[str, Any], affected_version: str) -> Optional[Dict[str, Any]]:
-        """Analyze a single commit to find which lines in affected version it changes."""
-        fix_commit_sha = commit_data['full_sha']
-        parent_commit_sha = commit_data['parent_full_sha']
-
-        commit_result = {
-            'sha': commit_data['sha'],
-            'full_sha': fix_commit_sha,
-            'message': commit_data['message'],
-            'files': []
-        }
-        
-        for file_data in commit_data.get('files_changed', {}).get('files', []):
-            file_result = self._analyze_file(file_data, fix_commit_sha, affected_version, parent_commit_sha)
-            if file_result:
-                commit_result['files'].append(file_result)
-        
-        return commit_result if commit_result['files'] else None
-    
-    def _analyze_file(self, file_data: Dict[str, Any], fix_commit_sha: str,
-                     affected_version: str, parent_commit_sha:str) -> Optional[Dict[str, Any]]:
-        """Analyze changes in a single file."""
-        if file_data.get('change_type') not in ['MODIFY', 'DELETE']:
-            return None
-        
-        file_path = file_data['path']
-        
-        # Get lines in affected version that were changed by fix commit
-        changed_lines = self.analyzer.get_changed_lines_in_affected_version(
-            file_path, fix_commit_sha, affected_version, file_data, parent_commit_sha
-        )
-        
-        if not changed_lines:
-            return None
-        
-        return {
-            'path': file_path,
-            'change_type': file_data.get('change_type'),
-            'changed_lines_in_affected_version': changed_lines
-        }
-
-
-def analyze_issue_at_affected_version(repo: git.Repo, issue_data: Dict[str, Any], 
-                                     affected_version: str) -> Dict[str, Any]:
-    """
-    Analyze issue by checking out affected version and using git blame --reverse
-    to find which lines were changed by the fix commits.
-    """
-    analyzer = GitBlameReverseAnalyzer(repo)
-    commit_analyzer = CommitAnalyzer(analyzer)
-    
-    # Store current branch/commit to restore later
-    original_ref = repo.head.reference if not repo.head.is_detached else repo.head.commit
-    
-    try:
-        # Checkout the affected version
-        if not analyzer.checkout_version(affected_version):
-            return {
-                'error': f'Could not checkout version {affected_version}',
-                'affected_version': affected_version,
-                'commits': []
+        # Save last file
+        if current_file and deleted_lines:
+            results[current_file] = {
+                'deleted_lines': deleted_lines,
+                'added_lines': added_lines
             }
         
-        results = {
+        return results
+    
+    def analyze_fix_commit(self, fix_commit_sha: str, affected_version: str, 
+                          commit_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Analyze changes between affected version and fix commit."""
+        affected_version_sha = self.version_resolver.resolve(affected_version)
+        if not affected_version_sha:
+            return {
+                'error': f'Could not resolve version {affected_version} to SHA',
+                'affected_version': affected_version,
+                'affected_version_sha': None,
+                'fixing_commit_sha': fix_commit_sha,
+                'changes': []
+            }
+        
+        result = {
             'affected_version': affected_version,
-            'commits': []
+            'affected_version_sha': affected_version_sha,
+            'affected_version_url': f"https://github.com/apache/{self.project}/commit/{affected_version_sha}",
+            'fixing_commit_sha': fix_commit_sha,
+            'fixing_commit_url': f"https://github.com/apache/{self.project}/commit/{fix_commit_sha}",
+            'checkout_command': f'git checkout {fix_commit_sha}',
+            'changes': []
         }
         
-        # Analyze each fix commit
-        for commit in issue_data.get('commits', []):
-            commit_result = commit_analyzer.analyze_commit(commit, affected_version)
-            if commit_result:
-                results['commits'].append(commit_result)
+        # Get files changed in the fix commit
+        fix_files = set()
+        for file_data in commit_data.get('files_changed', {}).get('files', []):
+            if file_data.get('change_type') in ['MODIFY', 'DELETE']:
+                fix_files.add(file_data['path'])
         
-        return results
+        # Run git diff for each file
+        for file_path in fix_files:
+            diff_command = f'git diff {affected_version_sha} {fix_commit_sha} -- {file_path}'
+            print(diff_command)
+            try:
+                # Run git diff with rename detection
+                diff_output = self.repo.git.diff(
+                    affected_version_sha,
+                    fix_commit_sha,
+                    '--',
+                    file_path,
+                    find_renames=True,
+                    no_prefix=False
+                )
+                if not diff_output:
+                    raise
+                
+                # Parse diff output
+                diff_results = self.parse_diff_output(diff_output)
+                
+                # Match deleted lines with fix commit changes
+                file_result = self._match_with_fix_commit(
+                    file_path, diff_results, commit_data, affected_version_sha, fix_commit_sha
+                )
+                
+                if file_result:
+                    file_result['diff_command'] = diff_command
+                    result['changes'].append(file_result)
+                    
+            except Exception as e:
+                print(f"    Error analyzing {file_path}: {e}")
+                continue
         
-    finally:
-        _restore_original_ref(repo, original_ref)
+        return result
+    
+    def _match_with_fix_commit(self, file_path: str, diff_results: Dict[str, Any],
+                              commit_data: Dict[str, Any], affected_version_sha: str,
+                              fix_commit_sha: str) -> Optional[Dict[str, Any]]:
+        """Match diff results with fix commit changes."""
+        if file_path not in diff_results:
+            return None
+        if not file_path.endswith('.java'):
+            return None
+        # Get the specific file changes from commit data
+        file_changes = None
+        for file_data in commit_data.get('files_changed', {}).get('files', []):
+            if file_data['path'] == file_path:
+                file_changes = file_data
+                break
+        
+        if not file_changes:
+            return None
+        
+        # Extract line numbers of deletions in affected version
+        modified_lines = []
+        unidentified_lines = []
+        
+        deleted_lines_diff = diff_results[file_path].get('deleted_lines', [])
+        
+
+            
+        # Try to match with chunks in fix commit
+        for chunk in file_changes.get('chunks', []):
+            for change in chunk.get('changes', []):
+                line_matched = False
+                if change['type'] in ['DELETE', 'MODIFY']:
+                    # Check each deleted line from diff against fix commit chunks
+                    for deleted_line in deleted_lines_diff:
+                        # Check if content matches
+                        if change.get('content', '').strip() == deleted_line['content'].strip():
+                            modified_lines.append(deleted_line['line_number'])
+                            line_matched = True
+                            break
+
+                    if not line_matched:
+                        unidentified_lines.append(change['line_number'])
+                        pass
+
+        
+        result = {
+            'filename': file_path,
+            'affected_version': {
+                'filename': file_path,
+                'modified_lines': sorted(modified_lines)
+            },
+            'fixing_commit': {
+                'filename': file_path,
+                'unidentified_lines': sorted(unidentified_lines)
+            }
+        }
+        
+        return result
 
 
-def _restore_original_ref(repo: git.Repo, original_ref):
-    """Restore the original branch/commit."""
-    try:
-        if isinstance(original_ref, git.Head):
-            original_ref.checkout()
-        else:
-            repo.git.checkout(original_ref.hexsha)
-    except:
-        pass
-
-
-def process_single_issue(repo: git.Repo, issue_key: str, issue_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+def process_single_issue(repo: git.Repo, issue_key: str, issue_data: Dict[str, Any], project:str) -> Optional[Dict[str, Any]]:
     """Process a single issue and return the analysis result."""
     # Get affected versions
     affected_versions = issue_data.get('issue', {}).get('affects', [])
     if not affected_versions:
         print(f"\n  Warning: No affected versions for {issue_key}")
         return None
-    analysis_results = {}
-    # Use the first affected version
+    
+    results = []
+    
+    # Process each affected version
     for affected_version in affected_versions:
         # Create a temporary clone to work with
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_repo_path = Path(temp_dir) / "repo"
             # Clone the repository to temporary directory
-            print(f"\n  Cloning repository for {issue_key}...")
+            print(f"\n  Cloning repository for {issue_key} (version: {affected_version})...")
             temp_repo = git.Repo.clone_from(
                 str(repo.working_dir),
                 str(temp_repo_path),
                 no_checkout=False
             )
+            
+            analyzer = GitDiffAnalyzer(temp_repo, project)
+            
+            # Process each fix commit
+            for commit in issue_data.get('commits', []):
+                fix_commit_sha = commit['full_sha']
+                print(f"  Processing fixing commit {fix_commit_sha}...")
 
-            # Analyze at affected version
-            analysis_result = analyze_issue_at_affected_version(
-                temp_repo,
-                issue_data,
-                affected_version
-            )
-            analysis_results[affected_version] = analysis_result
+                # Checkout the fix commit
+                if analyzer.checkout_commit(fix_commit_sha):
+                    # Analyze changes between affected version and fix commit
+                    analysis_result = analyzer.analyze_fix_commit(
+                        fix_commit_sha,
+                        affected_version,
+                        commit
+                    )
+                    
+                    results.append(analysis_result)
+    
     return {
         'issue': issue_data['issue'],
-        'blame': analysis_results
+        'analysis_results': results
     }
 
 
-
 def process_issues(input_file: Path, output_file: Path, config: Config) -> None:
-    """Process all issues and create test data with blame information."""
+    """Process all issues and create test data with diff analysis."""
     # Load input data
     data = load_json(input_file)
     
@@ -455,7 +397,7 @@ def process_issues(input_file: Path, output_file: Path, config: Config) -> None:
     total_issues = sum(len(issues) for issues in data.values())
     processed = 0
     
-    print(f"Processing {total_issues} issues with git blame --reverse analysis...")
+    print(f"Processing {total_issues} issues with git diff analysis...")
     
     for project, issues in data.items():
         print(f"\nProcessing {project} ({len(issues)} issues)...")
@@ -480,13 +422,13 @@ def process_issues(input_file: Path, output_file: Path, config: Config) -> None:
             processed += 1
             print_progress(processed, total_issues, f"Processing {issue_key}")
             
-            result = process_single_issue(repo, issue_key, issue_data)
+            result = process_single_issue(repo, issue_key, issue_data, project)
             if result:
                 project_results[issue_key] = result
-        
+            break  # FOR DEBUGGING
         if project_results:
             results[project] = project_results
-    
+        break # FOR DEBUGGING
     # Save results
     save_json(results, output_file)
     print(f"\n\nTest data saved to: {output_file}")
@@ -505,21 +447,25 @@ def print_analysis_summary(results: Dict[str, Any], total_issues: int) -> None:
     for project, project_data in results.items():
         issues_with_lines = 0
         total_lines_found = 0
+        total_unidentified = 0
         
         for issue_key, issue_result in project_data.items():
             has_lines = False
-            for commit in issue_result.get('analysis', {}).get('commits', []):
-                for file in commit.get('files', []):
-                    lines_count = len(file.get('changed_lines_in_affected_version', []))
+            for analysis in issue_result.get('analysis_results', []):
+                for change in analysis.get('changes', []):
+                    lines_count = len(change.get('affected_version', {}).get('modified_lines', []))
+                    unidentified_count = len(change.get('fixing_commit', {}).get('unidentified_lines', []))
                     if lines_count > 0:
                         total_lines_found += lines_count
                         has_lines = True
+                    total_unidentified += unidentified_count
             if has_lines:
                 issues_with_lines += 1
         
         print(f"  - {project}: {len(project_data)} issues analyzed, "
               f"{issues_with_lines} with changed lines found, "
-              f"{total_lines_found} total line numbers identified in affected versions")
+              f"{total_lines_found} total lines identified, "
+              f"{total_unidentified} unidentified lines")
 
 
 def main():
@@ -527,7 +473,7 @@ def main():
     config = Config()
     
     input_file = config.outputs_dir / "p4_issues_with_deleted_chunks.json"
-    output_file = config.outputs_dir / "p7_test_data_with_blame.json"
+    output_file = config.outputs_dir / "p7_test_data_with_diff.json"
     
     if not input_file.exists():
         print(f"Error: Input file {input_file} not found!")
