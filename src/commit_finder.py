@@ -283,6 +283,7 @@ class CommitFinder:
                     files_changed["files"].append(file_info)
                 
             except Exception as e:
+                raise
                 # Fallback to basic stats if diff parsing fails
                 print(f"    Warning: Could not parse diff for commit {commit.hexsha[:8]}: {str(e)[:50]}")
                 for file_path, file_stats in stats.files.items():
@@ -328,7 +329,7 @@ class CommitFinder:
         lines = diff_text.split('\n')
         
         current_chunk = None
-        
+        line_no = None
         for line in lines:
             # Look for chunk headers (@@)
             if line.startswith('@@'):
@@ -344,7 +345,7 @@ class CommitFinder:
                         old_count = int(match.group(2)) if match.group(2) else 1
                         new_start = int(match.group(3))
                         new_count = int(match.group(4)) if match.group(4) else 1
-                        
+                        line_no = old_start
                         current_chunk = {
                             "old_start": old_start,
                             "old_count": old_count,
@@ -366,9 +367,11 @@ class CommitFinder:
 
                 if change_type != "CONTEXT":
                     current_chunk["changes"].append({
+                        "line_number": line_no,
                         "type": change_type,
                         "content": line[1:] if len(line) > 1 else ""  # Remove +/- prefix
                     })
+                line_no += 1
         
         # Add the last chunk
         if current_chunk:

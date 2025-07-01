@@ -138,35 +138,58 @@ class GitDiffAnalyzer:
         return True
     
     def parse_diff_output(self, diff_output: str) -> Dict[str, Any]:
-        """Parse git diff output to extract changed lines."""
+        """Parse git diff output to extract changed lines and handle renames."""
         results = {}
         current_file = None
+        current_old_file = None
+        current_new_file = None
         current_old_start = 0
         current_new_start = 0
         deleted_lines = []
         added_lines = []
+        is_rename = False
+        line_offset = 0
         
         for line in diff_output.split('\n'):
             # File header
             if line.startswith('diff --git'):
                 # Save previous file results
-                if current_file and deleted_lines:
+                if current_file and (deleted_lines or is_rename):
                     results[current_file] = {
                         'deleted_lines': deleted_lines,
-                        'added_lines': added_lines
+                        'added_lines': added_lines,
+                        'old_path': current_old_file,
+                        'new_path': current_new_file,
+                        'is_rename': is_rename
                     }
                 # Reset for new file
                 current_file = None
+                current_old_file = None
+                current_new_file = None
                 deleted_lines = []
                 added_lines = []
+                is_rename = False
+                
+            # Handle rename detection
+            elif line.startswith('rename from '):
+                current_old_file = line[12:]
+                is_rename = True
+            elif line.startswith('rename to '):
+                current_new_file = line[10:]
+                current_file = current_old_file  # Use old filename as key for affected version
                 
             # Extract filename from --- or +++ lines
             elif line.startswith('--- a/'):
-                current_file = line[6:]
+                if not is_rename:
+                    current_file = line[6:]
+                    current_old_file = current_file
             elif line.startswith('--- /dev/null'):
-                current_file = None  # New file, skip
-            elif line.startswith('+++ b/') and not current_file:#TODO: いる？
-                current_file = line[6:]  # For renamed files
+                if not is_rename:
+                    current_file = None  # New file, skip
+            elif line.startswith('+++ b/'):
+                if not is_rename and not current_file:
+                    current_file = line[6:]
+                    current_new_file = current_file
                 
             # Hunk header
             elif line.startswith('@@'):
@@ -174,7 +197,7 @@ class GitDiffAnalyzer:
                 if match:
                     current_old_start = int(match.group(1))
                     current_new_start = int(match.group(2))
-                    line_offset = 0
+                line_offset = 0
                     
             # Deleted line
             elif line.startswith('-') and not line.startswith('---'):
@@ -198,10 +221,13 @@ class GitDiffAnalyzer:
                 line_offset += 1
         
         # Save last file
-        if current_file and deleted_lines:
+        if current_file and (deleted_lines or is_rename):
             results[current_file] = {
                 'deleted_lines': deleted_lines,
-                'added_lines': added_lines
+                'added_lines': added_lines,
+                'old_path': current_old_file,
+                'new_path': current_new_file,
+                'is_rename': is_rename
             }
         
         return results
@@ -229,59 +255,135 @@ class GitDiffAnalyzer:
             'changes': []
         }
         
-        # Get files changed in the fix commit
-        fix_files = set()
-        for file_data in commit_data.get('files_changed', {}).get('files', []):
-            if file_data.get('change_type') in ['MODIFY', 'DELETE']:
-                fix_files.add(file_data['path'])
+        # First, run a general diff to detect all changes including renames
+        diff_command = f'git diff {affected_version_sha} {fix_commit_sha}'
+        print(f"Running general diff: {diff_command}")
         
-        # Run git diff for each file
-        for file_path in fix_files:
-            diff_command = f'git diff {affected_version_sha} {fix_commit_sha} -- {file_path}'
-            print(diff_command)
-            try:
-                # Run git diff with rename detection
-                diff_output = self.repo.git.diff(
-                    affected_version_sha,
-                    fix_commit_sha,
-                    '--',
-                    file_path,
-                    find_renames=True,
-                    no_prefix=False
-                )
-                if not diff_output:
-                    raise
+        try:
+            # Run git diff with aggressive rename detection for all files
+            general_diff_output = self.repo.git.diff(
+                affected_version_sha,
+                fix_commit_sha,
+                '--find-copies-harder',
+                '--diff-algorithm=histogram',
+                '-M90%',  # Detect renames with 90% similarity
+                '-C90%',  # Detect copies with 90% similarity
+                '--full-index'  # Show full object names
+            )
+            
+            # Parse the general diff to understand all changes
+            all_diff_results = self.parse_diff_output(general_diff_output)
+            
+            # Debug: Print diff results to understand what's being detected
+            print(f"  Found {len(all_diff_results)} changed files in diff:")
+            for path, data in all_diff_results.items():
+                if data.get('is_rename'):
+                    print(f"    RENAME: {path} -> {data.get('new_path')} ({len(data.get('deleted_lines', []))} deletions)")
+                else:
+                    print(f"    MODIFY: {path} ({len(data.get('deleted_lines', []))} deletions)")
+            
+            # Get files changed in the fix commit
+            fix_files = {}
+            for file_data in commit_data.get('files_changed', {}).get('files', []):
+                if file_data.get('change_type') in ['MODIFY', 'DELETE', 'RENAME']:
+                    fix_files[file_data['path']] = file_data
+                    print(f"  Fix commit file: {file_data['path']} ({file_data.get('change_type')})")
+            
+            # First, try to match based on fix commit data (which may have rename info)
+            processed_files = set()
+            
+            for fix_file_path, fix_file_data in fix_files.items():
+                if fix_file_data.get('change_type') == 'RENAME':
+                    # Handle explicit renames from commit data
+                    old_path = fix_file_data.get('old_path', '')
+                    if old_path and old_path in all_diff_results:
+                        diff_data = all_diff_results[old_path]
+                        diff_data['is_rename'] = True
+                        diff_data['new_path'] = fix_file_path
+                        diff_data['old_path'] = old_path
+                        processed_files.add(old_path)
+                        
+                        file_result = self._match_with_fix_commit(
+                            old_path, {old_path: diff_data}, commit_data, affected_version_sha, fix_commit_sha,
+                            fix_file_path=fix_file_path
+                        )
+                        
+                        if file_result:
+                            file_result['diff_command'] = f'git diff {affected_version_sha} {fix_commit_sha} -- {old_path} {fix_file_path}'
+                            file_result['is_rename'] = True
+                            file_result['old_path'] = old_path
+                            file_result['new_path'] = fix_file_path
+                            result['changes'].append(file_result)
+                            print(f"    Processed RENAME: {old_path} -> {fix_file_path}")
+            
+            # Process remaining files from diff results
+            for file_path, diff_data in all_diff_results.items():
+                if file_path in processed_files:
+                    continue
+                    
+                # Find the corresponding fix file data
+                fix_file_data = None
+                fix_file_path = None
                 
-                # Parse diff output
-                diff_results = self.parse_diff_output(diff_output)
+                if diff_data.get('is_rename'):
+                    # For renamed files detected by git diff, check both old and new paths
+                    new_path = diff_data.get('new_path', '')
+                    for path, file_data in fix_files.items():
+                        if path == new_path or (file_data.get('old_path') and file_data.get('old_path') == file_path):
+                            fix_file_data = file_data
+                            fix_file_path = path
+                            break
+                else:
+                    # For non-renamed files, direct lookup
+                    fix_file_data = fix_files.get(file_path)
+                    fix_file_path = file_path
+                
+                if not fix_file_data:
+                    continue
                 
                 # Match deleted lines with fix commit changes
                 file_result = self._match_with_fix_commit(
-                    file_path, diff_results, commit_data, affected_version_sha, fix_commit_sha
+                    file_path, {file_path: diff_data}, commit_data, affected_version_sha, fix_commit_sha,
+                    fix_file_path=fix_file_path
                 )
                 
                 if file_result:
-                    file_result['diff_command'] = diff_command
+                    if diff_data.get('is_rename'):
+                        file_result['diff_command'] = f'git diff {affected_version_sha} {fix_commit_sha} -- {file_path} {diff_data.get("new_path", "")}'
+                        file_result['is_rename'] = True
+                        file_result['old_path'] = file_path
+                        file_result['new_path'] = diff_data.get('new_path', '')
+                    else:
+                        file_result['diff_command'] = f'git diff {affected_version_sha} {fix_commit_sha} -- {file_path}'
+                    
                     result['changes'].append(file_result)
                     
-            except Exception as e:
-                print(f"    Error analyzing {file_path}: {e}")
-                continue
+        except Exception as e:
+            print(f"    Error in diff analysis: {e}")
+            import traceback
+            traceback.print_exc()
         
         return result
     
     def _match_with_fix_commit(self, file_path: str, diff_results: Dict[str, Any],
                               commit_data: Dict[str, Any], affected_version_sha: str,
-                              fix_commit_sha: str) -> Optional[Dict[str, Any]]:
+                              fix_commit_sha: str, fix_file_path: str = None) -> Optional[Dict[str, Any]]:
         """Match diff results with fix commit changes."""
         if file_path not in diff_results:
             return None
-        if not file_path.endswith('.java'):
+        # Check if either the old path (affected version) or new path (fix version) is a Java file
+        diff_data = diff_results[file_path]
+        is_java_file = file_path.endswith('.java')
+        if diff_data.get('is_rename') and diff_data.get('new_path'):
+            is_java_file = is_java_file or diff_data['new_path'].endswith('.java')
+        if not is_java_file:
             return None
         # Get the specific file changes from commit data
+        # Use fix_file_path if provided (for renamed files), otherwise use file_path
+        lookup_path = fix_file_path if fix_file_path else file_path
         file_changes = None
         for file_data in commit_data.get('files_changed', {}).get('files', []):
-            if file_data['path'] == file_path:
+            if file_data['path'] == lookup_path:
                 file_changes = file_data
                 break
         
@@ -315,16 +417,21 @@ class GitDiffAnalyzer:
 
         
         result = {
-            'filename': file_path,
             'affected_version': {
                 'filename': file_path,
                 'modified_lines': sorted(modified_lines)
             },
             'fixing_commit': {
-                'filename': file_path,
+                'filename': lookup_path,  # Use the actual path in fix commit
                 'unidentified_lines': sorted(unidentified_lines)
             }
         }
+        
+        # Add rename information if applicable
+        if diff_data.get('is_rename'):
+            result['is_rename'] = True
+            result['old_path'] = file_path
+            result['new_path'] = diff_data.get('new_path', '')
         
         return result
 
@@ -425,10 +532,12 @@ def process_issues(input_file: Path, output_file: Path, config: Config) -> None:
             result = process_single_issue(repo, issue_key, issue_data, project)
             if result:
                 project_results[issue_key] = result
-            break  # FOR DEBUGGING
+            if DEBUG_MODE:
+                break  # FOR DEBUGGING
         if project_results:
             results[project] = project_results
-        break # FOR DEBUGGING
+        if DEBUG_MODE:
+            break # FOR DEBUGGING
     # Save results
     save_json(results, output_file)
     print(f"\n\nTest data saved to: {output_file}")
@@ -483,5 +592,6 @@ def main():
     process_issues(input_file, output_file, config)
 
 
+DEBUG_MODE = False
 if __name__ == "__main__":
     main()
