@@ -147,10 +147,11 @@ class CommitFinder:
         for issue in issues:
             issue_key = issue["Issue key"]
             issue_patterns[issue_key] = [
-                re.compile(rf'\b{re.escape(issue_key)}\b', re.IGNORECASE),
-                re.compile(rf'#{re.escape(issue_key)}\b', re.IGNORECASE),
-                re.compile(rf'\[{re.escape(issue_key)}\]', re.IGNORECASE),
+                re.compile(rf'^{re.escape(issue_key)}\b', re.IGNORECASE | re.MULTILINE),
+                re.compile(rf'^#{re.escape(issue_key)}\b', re.IGNORECASE | re.MULTILINE),
+                re.compile(rf'^\[{re.escape(issue_key)}]', re.IGNORECASE | re.MULTILINE),
             ]
+            # TODO: DRUIDの時は()のみhttps://github.com/apache/druid/commits/master/
         
         # Search commits once and match against all issues
         print(f"Scanning repository commits across all branches...")
@@ -200,6 +201,8 @@ class CommitFinder:
                         commit_info = {
                             "sha": commit.hexsha[:8],
                             "full_sha": commit.hexsha,
+                            "num_parents": len(commit.parents),
+                            "parent_full_sha": commit.parents[0].hexsha,
                             "author": str(commit.author),
                             "author_email": commit.author.email,
                             "date": commit.committed_datetime.isoformat(),
