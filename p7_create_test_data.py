@@ -391,8 +391,8 @@ class GitDiffAnalyzer:
             return None
         
         # Extract line numbers of deletions in affected version
-        modified_lines = []
-        unidentified_lines = []
+        modified_lines = set()
+        unidentified_lines = set()
         
         deleted_lines_diff = diff_results[file_path].get('deleted_lines', [])
         
@@ -407,12 +407,12 @@ class GitDiffAnalyzer:
                     for deleted_line in deleted_lines_diff:
                         # Check if content matches
                         if change.get('content', '').strip() == deleted_line['content'].strip():
-                            modified_lines.append(deleted_line['line_number'])
+                            modified_lines.add(deleted_line['line_number'])
                             line_matched = True
                             break
 
                     if not line_matched:
-                        unidentified_lines.append(change['line_number'])
+                        unidentified_lines.add(change['line_number'])
                         pass
 
         
