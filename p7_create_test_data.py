@@ -418,10 +418,12 @@ class GitDiffAnalyzer:
         
         result = {
             'affected_version': {
+                'url': f"https://github.com/{self.project}/tree/{affected_version_sha}/{file_path}",  # Use the actual path in fix commit
                 'filename': file_path,
                 'modified_lines': sorted(modified_lines)
             },
             'fixing_commit': {
+                'url': f"https://github.com/{self.project}/tree/{fix_commit_sha}/{lookup_path}",  # Use the actual path in fix commit
                 'filename': lookup_path,  # Use the actual path in fix commit
                 'unidentified_lines': sorted(unidentified_lines)
             }
