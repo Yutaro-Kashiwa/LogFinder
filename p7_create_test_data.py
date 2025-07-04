@@ -396,20 +396,38 @@ class GitDiffAnalyzer:
         
         deleted_lines_diff = diff_results[file_path].get('deleted_lines', [])
         
-
-            
+        # Create a list of unmatched deleted lines to avoid duplicate matching
+        unmatched_deleted_lines = deleted_lines_diff.copy()
+        
         # Try to match with chunks in fix commit
         for chunk in file_changes.get('chunks', []):
+            chunk_start_line = chunk.get('start_line', 0)
+            
             for change in chunk.get('changes', []):
                 line_matched = False
                 if change['type'] in ['DELETE', 'MODIFY']:
-                    # Check each deleted line from diff against fix commit chunks
-                    for deleted_line in deleted_lines_diff:
+                    best_match = None
+                    best_distance = float('inf')
+                    
+                    # Find the best matching deleted line based on content and proximity
+                    for i, deleted_line in enumerate(unmatched_deleted_lines):
                         # Check if content matches
                         if change.get('content', '').strip() == deleted_line['content'].strip():
-                            modified_lines.add(deleted_line['line_number'])
-                            line_matched = True
-                            break
+                            # Calculate distance from the change line number to deleted line number
+                            # Use chunk start line + relative line number as approximation
+                            change_line = chunk_start_line + change.get('line_number', 0)
+                            distance = abs(deleted_line['line_number'] - change_line)
+                            
+                            if distance < best_distance:
+                                best_distance = distance
+                                best_match = (i, deleted_line)
+                    
+                    # If a match was found, use it and remove from unmatched list
+                    if best_match is not None:
+                        match_index, matched_line = best_match
+                        modified_lines.add(matched_line['line_number'])
+                        unmatched_deleted_lines.pop(match_index)
+                        line_matched = True
 
                     if not line_matched:
                         unidentified_lines.add(change['line_number'])
