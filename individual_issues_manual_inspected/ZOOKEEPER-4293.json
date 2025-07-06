@@ -1,0 +1,110 @@
+{
+  "project": "ZooKeeper",
+  "issue_key": "ZOOKEEPER-4293",
+  "data": {
+    "issue": {
+      "key": "ZOOKEEPER-4293",
+      "summary": "Lock Contention in ClientCnxnSocketNetty (possible deadlock)",
+      "status": "Closed",
+      "priority": "Critical",
+      "created": "11/May/21 18:13",
+      "affects": [
+        "3.5.8"
+      ],
+      "log": [
+        {
+          "date": "11/May/21 18:02",
+          "username": "michael.edgar",
+          "filename": "strimzi-jstack-1620755249.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/13025331/strimzi-jstack-1620755249.log"
+        }
+      ]
+    },
+    "analysis_results": [
+      {
+        "affected_version": "3.5.8",
+        "affected_version_sha": "f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "fixing_commit_sha": "9df310a9df6e03ca24d7671f10e78fff7b618084",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/9df310a9df6e03ca24d7671f10e78fff7b618084",
+        "checkout_command": "git checkout 9df310a9df6e03ca24d7671f10e78fff7b618084",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java",
+              "modified_lines": [
+                212
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/9df310a9df6e03ca24d7671f10e78fff7b618084",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/9df310a9df6e03ca24d7671f10e78fff7b618084/zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 9df310a9df6e03ca24d7671f10e78fff7b618084 -- zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java",
+              "modified_lines": [
+                265
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/9df310a9df6e03ca24d7671f10e78fff7b618084",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/9df310a9df6e03ca24d7671f10e78fff7b618084/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 9df310a9df6e03ca24d7671f10e78fff7b618084 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "3.5.8",
+        "affected_version_sha": "f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "fixing_commit_sha": "5622988532246e4ff382e59f9014057fe05f2554",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/5622988532246e4ff382e59f9014057fe05f2554",
+        "checkout_command": "git checkout 5622988532246e4ff382e59f9014057fe05f2554",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java",
+              "modified_lines": [
+                212
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/5622988532246e4ff382e59f9014057fe05f2554",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/5622988532246e4ff382e59f9014057fe05f2554/zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 5622988532246e4ff382e59f9014057fe05f2554 -- zookeeper-server/src/main/java/org/apache/zookeeper/ClientCnxnSocketNetty.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java",
+              "modified_lines": [
+                265
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/5622988532246e4ff382e59f9014057fe05f2554",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/5622988532246e4ff382e59f9014057fe05f2554/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 5622988532246e4ff382e59f9014057fe05f2554 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/UnifiedServerSocket.java"
+          }
+        ]
+      }
+    ]
+  }
+}

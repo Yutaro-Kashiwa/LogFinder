@@ -1,0 +1,130 @@
+{
+  "project": "HBase",
+  "issue_key": "HBASE-14291",
+  "data": {
+    "issue": {
+      "key": "HBASE-14291",
+      "summary": "NPE On StochasticLoadBalancer Balance Involving RS With No Regions",
+      "status": "Closed",
+      "priority": "Minor",
+      "created": "22/Aug/15 04:28",
+      "affects": [
+        "2.0.0"
+      ],
+      "log": [
+        {
+          "date": "22/Aug/15 04:29",
+          "username": "mwarhaftig",
+          "filename": "hbase-mwarhaftig-master-Matts-MBP.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/12751859/hbase-mwarhaftig-master-Matts-MBP.log"
+        }
+      ]
+    },
+    "analysis_results": [
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "e95cf8fdb4c78458e3058198e13c6d3cbd85a0e2",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/e95cf8fdb4c78458e3058198e13c6d3cbd85a0e2",
+        "checkout_command": "git checkout e95cf8fdb4c78458e3058198e13c6d3cbd85a0e2",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/e95cf8fdb4c78458e3058198e13c6d3cbd85a0e2",
+              "snapshot_url": "https://github.com/apache/HBase/tree/e95cf8fdb4c78458e3058198e13c6d3cbd85a0e2/hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "unidentified_lines": [
+                863
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 e95cf8fdb4c78458e3058198e13c6d3cbd85a0e2 -- hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "dab6fe298bddd3353f1e6ede6af8d2a0f547d01c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/dab6fe298bddd3353f1e6ede6af8d2a0f547d01c",
+        "checkout_command": "git checkout dab6fe298bddd3353f1e6ede6af8d2a0f547d01c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/dab6fe298bddd3353f1e6ede6af8d2a0f547d01c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/dab6fe298bddd3353f1e6ede6af8d2a0f547d01c/hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "unidentified_lines": [
+                406
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 dab6fe298bddd3353f1e6ede6af8d2a0f547d01c -- hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "7622d1b3e8e82add7175d1b6153fd0735a93498f",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/7622d1b3e8e82add7175d1b6153fd0735a93498f",
+        "checkout_command": "git checkout 7622d1b3e8e82add7175d1b6153fd0735a93498f",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/7622d1b3e8e82add7175d1b6153fd0735a93498f",
+              "snapshot_url": "https://github.com/apache/HBase/tree/7622d1b3e8e82add7175d1b6153fd0735a93498f/hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "unidentified_lines": [
+                847
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 7622d1b3e8e82add7175d1b6153fd0735a93498f -- hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "0b081303b949508caace40218c1a16d8ba59885d",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/0b081303b949508caace40218c1a16d8ba59885d",
+        "checkout_command": "git checkout 0b081303b949508caace40218c1a16d8ba59885d",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/0b081303b949508caace40218c1a16d8ba59885d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/0b081303b949508caace40218c1a16d8ba59885d/hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
+              "unidentified_lines": [
+                861
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 0b081303b949508caace40218c1a16d8ba59885d -- hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,395 @@
+{
+  "project": "HBase",
+  "issue_key": "HBASE-17069",
+  "data": {
+    "issue": {
+      "key": "HBASE-17069",
+      "summary": "RegionServer writes invalid META entries for split daughters in some circumstances",
+      "status": "Resolved",
+      "priority": "Blocker",
+      "created": "10/Nov/16 23:42",
+      "affects": [
+        "1.2.4",
+        "1.3.0",
+        "1.4.0",
+        "2.0.0"
+      ],
+      "log": [
+        {
+          "date": "10/Nov/16 23:46",
+          "username": "apurtell",
+          "filename": "daughter_1_d55ef81c2f8299abbddfce0445067830.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/12838460/daughter_1_d55ef81c2f8299abbddfce0445067830.log"
+        },
+        {
+          "date": "10/Nov/16 23:46",
+          "username": "apurtell",
+          "filename": "daughter_2_08629d59564726da2497f70451aafcdb.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/12838461/daughter_2_08629d59564726da2497f70451aafcdb.log"
+        },
+        {
+          "date": "10/Nov/16 23:46",
+          "username": "apurtell",
+          "filename": "logs.tar.gz",
+          "url": "https://issues.apache.org/jira/secure/attachment/12838463/logs.tar.gz"
+        },
+        {
+          "date": "10/Nov/16 23:46",
+          "username": "apurtell",
+          "filename": "parent-393d2bfd8b1c52ce08540306659624f2.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/12838462/parent-393d2bfd8b1c52ce08540306659624f2.log"
+        }
+      ]
+    },
+    "analysis_results": [
+      {
+        "affected_version": "1.2.4",
+        "affected_version_sha": "67592f3d062743907f8c5ae00dbbe1ae4f69e5af",
+        "affected_version_url": "https://github.com/apache/HBase/commit/67592f3d062743907f8c5ae00dbbe1ae4f69e5af",
+        "fixing_commit_sha": "0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "checkout_command": "git checkout 0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "changes": []
+      },
+      {
+        "affected_version": "1.2.4",
+        "affected_version_sha": "67592f3d062743907f8c5ae00dbbe1ae4f69e5af",
+        "affected_version_url": "https://github.com/apache/HBase/commit/67592f3d062743907f8c5ae00dbbe1ae4f69e5af",
+        "fixing_commit_sha": "3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "checkout_command": "git checkout 3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/67592f3d062743907f8c5ae00dbbe1ae4f69e5af/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": [
+                6990
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+              "snapshot_url": "https://github.com/apache/HBase/tree/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 67592f3d062743907f8c5ae00dbbe1ae4f69e5af 3f9cb1ae2c8b316354d2ded7c41275cb27499ce0 -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.2.4",
+        "affected_version_sha": "67592f3d062743907f8c5ae00dbbe1ae4f69e5af",
+        "affected_version_url": "https://github.com/apache/HBase/commit/67592f3d062743907f8c5ae00dbbe1ae4f69e5af",
+        "fixing_commit_sha": "b511ac157c6e104306dada16e74c87014e2ae37f",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b511ac157c6e104306dada16e74c87014e2ae37f",
+        "checkout_command": "git checkout b511ac157c6e104306dada16e74c87014e2ae37f",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/67592f3d062743907f8c5ae00dbbe1ae4f69e5af/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": [
+                6990
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b511ac157c6e104306dada16e74c87014e2ae37f",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b511ac157c6e104306dada16e74c87014e2ae37f/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 67592f3d062743907f8c5ae00dbbe1ae4f69e5af b511ac157c6e104306dada16e74c87014e2ae37f -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.2.4",
+        "affected_version_sha": "67592f3d062743907f8c5ae00dbbe1ae4f69e5af",
+        "affected_version_url": "https://github.com/apache/HBase/commit/67592f3d062743907f8c5ae00dbbe1ae4f69e5af",
+        "fixing_commit_sha": "4038917239aa34296fbf2371855fae8cd60db34c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/4038917239aa34296fbf2371855fae8cd60db34c",
+        "checkout_command": "git checkout 4038917239aa34296fbf2371855fae8cd60db34c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/67592f3d062743907f8c5ae00dbbe1ae4f69e5af/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": [
+                6990
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/4038917239aa34296fbf2371855fae8cd60db34c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/4038917239aa34296fbf2371855fae8cd60db34c/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 67592f3d062743907f8c5ae00dbbe1ae4f69e5af 4038917239aa34296fbf2371855fae8cd60db34c -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.3.0",
+        "affected_version_sha": "e359c76e8d9fd0d67396456f92bcbad9ecd7a710",
+        "affected_version_url": "https://github.com/apache/HBase/commit/e359c76e8d9fd0d67396456f92bcbad9ecd7a710",
+        "fixing_commit_sha": "0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "checkout_command": "git checkout 0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "changes": []
+      },
+      {
+        "affected_version": "1.3.0",
+        "affected_version_sha": "e359c76e8d9fd0d67396456f92bcbad9ecd7a710",
+        "affected_version_url": "https://github.com/apache/HBase/commit/e359c76e8d9fd0d67396456f92bcbad9ecd7a710",
+        "fixing_commit_sha": "3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "checkout_command": "git checkout 3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/e359c76e8d9fd0d67396456f92bcbad9ecd7a710/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": [
+                7190
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+              "snapshot_url": "https://github.com/apache/HBase/tree/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff e359c76e8d9fd0d67396456f92bcbad9ecd7a710 3f9cb1ae2c8b316354d2ded7c41275cb27499ce0 -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.3.0",
+        "affected_version_sha": "e359c76e8d9fd0d67396456f92bcbad9ecd7a710",
+        "affected_version_url": "https://github.com/apache/HBase/commit/e359c76e8d9fd0d67396456f92bcbad9ecd7a710",
+        "fixing_commit_sha": "b511ac157c6e104306dada16e74c87014e2ae37f",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b511ac157c6e104306dada16e74c87014e2ae37f",
+        "checkout_command": "git checkout b511ac157c6e104306dada16e74c87014e2ae37f",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/e359c76e8d9fd0d67396456f92bcbad9ecd7a710/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": [
+                7190
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b511ac157c6e104306dada16e74c87014e2ae37f",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b511ac157c6e104306dada16e74c87014e2ae37f/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff e359c76e8d9fd0d67396456f92bcbad9ecd7a710 b511ac157c6e104306dada16e74c87014e2ae37f -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.3.0",
+        "affected_version_sha": "e359c76e8d9fd0d67396456f92bcbad9ecd7a710",
+        "affected_version_url": "https://github.com/apache/HBase/commit/e359c76e8d9fd0d67396456f92bcbad9ecd7a710",
+        "fixing_commit_sha": "4038917239aa34296fbf2371855fae8cd60db34c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/4038917239aa34296fbf2371855fae8cd60db34c",
+        "checkout_command": "git checkout 4038917239aa34296fbf2371855fae8cd60db34c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/e359c76e8d9fd0d67396456f92bcbad9ecd7a710/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": [
+                7190
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/4038917239aa34296fbf2371855fae8cd60db34c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/4038917239aa34296fbf2371855fae8cd60db34c/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff e359c76e8d9fd0d67396456f92bcbad9ecd7a710 4038917239aa34296fbf2371855fae8cd60db34c -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "checkout_command": "git checkout 0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "changes": []
+      },
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "checkout_command": "git checkout 3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+              "snapshot_url": "https://github.com/apache/HBase/tree/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": [
+                6999
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 3f9cb1ae2c8b316354d2ded7c41275cb27499ce0 -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "b511ac157c6e104306dada16e74c87014e2ae37f",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b511ac157c6e104306dada16e74c87014e2ae37f",
+        "checkout_command": "git checkout b511ac157c6e104306dada16e74c87014e2ae37f",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b511ac157c6e104306dada16e74c87014e2ae37f",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b511ac157c6e104306dada16e74c87014e2ae37f/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": [
+                7199
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 b511ac157c6e104306dada16e74c87014e2ae37f -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "4038917239aa34296fbf2371855fae8cd60db34c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/4038917239aa34296fbf2371855fae8cd60db34c",
+        "checkout_command": "git checkout 4038917239aa34296fbf2371855fae8cd60db34c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/4038917239aa34296fbf2371855fae8cd60db34c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/4038917239aa34296fbf2371855fae8cd60db34c/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": [
+                7388
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 4038917239aa34296fbf2371855fae8cd60db34c -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "checkout_command": "git checkout 0446ed0f0c662608a7816a9c3fc3becacc682fb4",
+        "changes": []
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "checkout_command": "git checkout 3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0",
+              "snapshot_url": "https://github.com/apache/HBase/tree/3f9cb1ae2c8b316354d2ded7c41275cb27499ce0/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": [
+                6999
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 3f9cb1ae2c8b316354d2ded7c41275cb27499ce0 -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "b511ac157c6e104306dada16e74c87014e2ae37f",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b511ac157c6e104306dada16e74c87014e2ae37f",
+        "checkout_command": "git checkout b511ac157c6e104306dada16e74c87014e2ae37f",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b511ac157c6e104306dada16e74c87014e2ae37f",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b511ac157c6e104306dada16e74c87014e2ae37f/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": [
+                7199
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 b511ac157c6e104306dada16e74c87014e2ae37f -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "4038917239aa34296fbf2371855fae8cd60db34c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/4038917239aa34296fbf2371855fae8cd60db34c",
+        "checkout_command": "git checkout 4038917239aa34296fbf2371855fae8cd60db34c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/4038917239aa34296fbf2371855fae8cd60db34c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/4038917239aa34296fbf2371855fae8cd60db34c/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
+              "unidentified_lines": [
+                7388
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 4038917239aa34296fbf2371855fae8cd60db34c -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
+          }
+        ]
+      }
+    ]
+  }
+}

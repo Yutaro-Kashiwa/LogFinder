@@ -126,10 +126,11 @@ class RepositoryValidator:
 class GitDiffAnalyzer:
     """Use git diff to find changes between affected version and fix commit."""
     
-    def __init__(self, repo: git.Repo, project:str):
+    def __init__(self, repo: git.Repo, project:str, owner:str):
         self.repo = repo
         self.version_resolver = VersionResolver(repo)
         self.project = project
+        self.owner = owner
     
     @handle_git_errors("Checkout commit")
     def checkout_commit(self, commit_sha: str) -> bool:
@@ -248,9 +249,9 @@ class GitDiffAnalyzer:
         result = {
             'affected_version': affected_version,
             'affected_version_sha': affected_version_sha,
-            'affected_version_url': f"https://github.com/apache/{self.project}/commit/{affected_version_sha}",
+            'affected_version_url': f"https://github.com/{self.owner}/{self.project}/commit/{affected_version_sha}",
             'fixing_commit_sha': fix_commit_sha,
-            'fixing_commit_url': f"https://github.com/apache/{self.project}/commit/{fix_commit_sha}",
+            'fixing_commit_url': f"https://github.com/{self.owner}/{self.project}/commit/{fix_commit_sha}",
             'checkout_command': f'git checkout {fix_commit_sha}',
             'changes': []
         }
@@ -296,6 +297,7 @@ class GitDiffAnalyzer:
                 if fix_file_data.get('change_type') == 'RENAME':
                     # Handle explicit renames from commit data
                     old_path = fix_file_data.get('old_path', '')
+
                     if old_path and old_path in all_diff_results:
                         diff_data = all_diff_results[old_path]
                         diff_data['is_rename'] = True
@@ -320,7 +322,9 @@ class GitDiffAnalyzer:
             for file_path, diff_data in all_diff_results.items():
                 if file_path in processed_files:
                     continue
-                    
+                print(file_path, type(file_path))
+                if "/tests/" in file_path or "/test/" in file_path:
+                    continue
                 # Find the corresponding fix file data
                 fix_file_data = None
                 fix_file_path = None
@@ -436,12 +440,13 @@ class GitDiffAnalyzer:
         
         result = {
             'affected_version': {
-                'url': f"https://github.com/{self.project}/tree/{affected_version_sha}/{file_path}",  # Use the actual path in fix commit
+                'snapshot_url': f"https://github.com/{self.owner}/{self.project}/tree/{affected_version_sha}/{file_path}",  # Use the actual path in fix commit
                 'filename': file_path,
                 'modified_lines': sorted(modified_lines)
             },
             'fixing_commit': {
-                'url': f"https://github.com/{self.project}/tree/{fix_commit_sha}/{lookup_path}",  # Use the actual path in fix commit
+                'fixing_commit_url': f"https://github.com/{self.owner}/{self.project}/commit/{fix_commit_sha}",
+                'snapshot_url': f"https://github.com/{self.owner}/{self.project}/tree/{fix_commit_sha}/{lookup_path}",  # Use the actual path in fix commit
                 'filename': lookup_path,  # Use the actual path in fix commit
                 'unidentified_lines': sorted(unidentified_lines)
             }
@@ -456,7 +461,7 @@ class GitDiffAnalyzer:
         return result
 
 
-def process_single_issue(repo: git.Repo, issue_key: str, issue_data: Dict[str, Any], project:str) -> Optional[Dict[str, Any]]:
+def process_single_issue(repo: git.Repo, issue_key: str, issue_data: Dict[str, Any], project:str, owner:str) -> Optional[Dict[str, Any]]:
     """Process a single issue and return the analysis result."""
     # Get affected versions
     affected_versions = issue_data.get('issue', {}).get('affects', [])
@@ -479,7 +484,7 @@ def process_single_issue(repo: git.Repo, issue_key: str, issue_data: Dict[str, A
                 no_checkout=False
             )
             
-            analyzer = GitDiffAnalyzer(temp_repo, project)
+            analyzer = GitDiffAnalyzer(temp_repo, project, owner)
             
             # Process each fix commit
             for commit in issue_data.get('commits', []):
@@ -548,8 +553,8 @@ def process_issues(input_file: Path, output_file: Path, config: Config) -> None:
         for issue_key, issue_data in issues.items():
             processed += 1
             print_progress(processed, total_issues, f"Processing {issue_key}")
-            
-            result = process_single_issue(repo, issue_key, issue_data, project)
+            owner = "apache" # TODO: Fix
+            result = process_single_issue(repo, issue_key, issue_data, project, owner)
             if result:
                 project_results[issue_key] = result
             if DEBUG_MODE:

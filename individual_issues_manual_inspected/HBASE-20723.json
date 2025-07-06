@@ -1,0 +1,1884 @@
+{
+  "project": "HBase",
+  "issue_key": "HBASE-20723",
+  "data": {
+    "issue": {
+      "key": "HBASE-20723",
+      "summary": "Custom hbase.wal.dir results in data loss because we write recovered edits into a different place than where the recovering region server looks for them",
+      "status": "Closed",
+      "priority": "Critical",
+      "created": "13/Jun/18 01:47",
+      "affects": [
+        "1.4.0",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "2.0.0"
+      ],
+      "log": [
+        {
+          "date": "13/Jun/18 01:30",
+          "username": "rpednekar",
+          "filename": "logs.zip",
+          "url": "https://issues.apache.org/jira/secure/attachment/12927567/logs.zip"
+        }
+      ]
+    },
+    "analysis_results": [
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "checkout_command": "git checkout ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                144,
+                186,
+                193,
+                238,
+                309,
+                531,
+                533,
+                540,
+                541,
+                1333,
+                1357,
+                1358,
+                1409,
+                1419,
+                1420,
+                1425,
+                1426,
+                1532,
+                1550,
+                1553,
+                1554
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/ac5bb8155b618194fe9cf1131f0e72c99b7b534c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                194,
+                325,
+                1487,
+                1488
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "2702f23a4addaa459d6f221c0008be0c556f672d",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+        "checkout_command": "git checkout 2702f23a4addaa459d6f221c0008be0c556f672d",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": [
+                21,
+                22,
+                23,
+                373
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                144,
+                186,
+                193,
+                238,
+                241,
+                309,
+                400,
+                531,
+                533,
+                540,
+                1357,
+                1358,
+                1409,
+                1419,
+                1420,
+                1425,
+                1426,
+                1532,
+                1545,
+                1546,
+                1550,
+                1553,
+                1554
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                543,
+                552,
+                585,
+                1357,
+                1586
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "checkout_command": "git checkout c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                144,
+                186,
+                193,
+                238,
+                241,
+                309,
+                400,
+                531,
+                533,
+                540,
+                541,
+                1357,
+                1358,
+                1409,
+                1419,
+                1420,
+                1425,
+                1426,
+                1532,
+                1545,
+                1546,
+                1550,
+                1553,
+                1554
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                1359,
+                1588
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "checkout_command": "git checkout 6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                144,
+                186,
+                193,
+                228,
+                238,
+                241,
+                309,
+                400,
+                531,
+                533,
+                540,
+                541,
+                1357,
+                1358,
+                1409,
+                1419,
+                1420,
+                1425,
+                1426,
+                1532,
+                1545,
+                1546,
+                1550,
+                1553,
+                1554
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                1359,
+                1588
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.0",
+        "affected_version_sha": "10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "affected_version_url": "https://github.com/apache/HBase/commit/10b9b9fae6b557157644fb9a0dc641bb8cb26e39",
+        "fixing_commit_sha": "b2afba580b4b9285973b57812741857cf480be4c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+        "checkout_command": "git checkout b2afba580b4b9285973b57812741857cf480be4c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/10b9b9fae6b557157644fb9a0dc641bb8cb26e39/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                144,
+                186,
+                193,
+                238,
+                309,
+                531,
+                533,
+                540,
+                541,
+                1333,
+                1357,
+                1358,
+                1409,
+                1419,
+                1420,
+                1425,
+                1426,
+                1532,
+                1550,
+                1553,
+                1554
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b2afba580b4b9285973b57812741857cf480be4c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                193,
+                324,
+                1488,
+                1489
+              ]
+            },
+            "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.1",
+        "affected_version_sha": "4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "affected_version_url": "https://github.com/apache/HBase/commit/4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "fixing_commit_sha": "ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "checkout_command": "git checkout ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/4b25debc8336198c5a0653fb5648e9ac8b69ca5e/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                320,
+                542,
+                544,
+                551,
+                552,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/ac5bb8155b618194fe9cf1131f0e72c99b7b534c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                194,
+                325,
+                1263,
+                1488
+              ]
+            },
+            "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.1",
+        "affected_version_sha": "4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "affected_version_url": "https://github.com/apache/HBase/commit/4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "fixing_commit_sha": "2702f23a4addaa459d6f221c0008be0c556f672d",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+        "checkout_command": "git checkout 2702f23a4addaa459d6f221c0008be0c556f672d",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/4b25debc8336198c5a0653fb5648e9ac8b69ca5e/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": [
+                21,
+                22,
+                23,
+                373
+              ]
+            },
+            "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/4b25debc8336198c5a0653fb5648e9ac8b69ca5e/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                543,
+                552,
+                585
+              ]
+            },
+            "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.1",
+        "affected_version_sha": "4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "affected_version_url": "https://github.com/apache/HBase/commit/4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "fixing_commit_sha": "c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "checkout_command": "git checkout c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/4b25debc8336198c5a0653fb5648e9ac8b69ca5e/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/4b25debc8336198c5a0653fb5648e9ac8b69ca5e/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                552,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.1",
+        "affected_version_sha": "4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "affected_version_url": "https://github.com/apache/HBase/commit/4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "fixing_commit_sha": "6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "checkout_command": "git checkout 6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/4b25debc8336198c5a0653fb5648e9ac8b69ca5e/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/4b25debc8336198c5a0653fb5648e9ac8b69ca5e/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                239,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                552,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.1",
+        "affected_version_sha": "4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "affected_version_url": "https://github.com/apache/HBase/commit/4b25debc8336198c5a0653fb5648e9ac8b69ca5e",
+        "fixing_commit_sha": "b2afba580b4b9285973b57812741857cf480be4c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+        "checkout_command": "git checkout b2afba580b4b9285973b57812741857cf480be4c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/4b25debc8336198c5a0653fb5648e9ac8b69ca5e/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                320,
+                542,
+                544,
+                551,
+                552,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b2afba580b4b9285973b57812741857cf480be4c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                193,
+                324,
+                1262,
+                1489
+              ]
+            },
+            "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.2",
+        "affected_version_sha": "b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "affected_version_url": "https://github.com/apache/HBase/commit/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "fixing_commit_sha": "ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "checkout_command": "git checkout ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                320,
+                542,
+                544,
+                551,
+                552,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/ac5bb8155b618194fe9cf1131f0e72c99b7b534c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                194,
+                325,
+                1263,
+                1488
+              ]
+            },
+            "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.2",
+        "affected_version_sha": "b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "affected_version_url": "https://github.com/apache/HBase/commit/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "fixing_commit_sha": "2702f23a4addaa459d6f221c0008be0c556f672d",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+        "checkout_command": "git checkout 2702f23a4addaa459d6f221c0008be0c556f672d",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": [
+                21,
+                22,
+                23,
+                373
+              ]
+            },
+            "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                543,
+                552,
+                585
+              ]
+            },
+            "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.2",
+        "affected_version_sha": "b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "affected_version_url": "https://github.com/apache/HBase/commit/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "fixing_commit_sha": "c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "checkout_command": "git checkout c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                552,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.2",
+        "affected_version_sha": "b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "affected_version_url": "https://github.com/apache/HBase/commit/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "fixing_commit_sha": "6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "checkout_command": "git checkout 6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                239,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                552,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.2",
+        "affected_version_sha": "b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "affected_version_url": "https://github.com/apache/HBase/commit/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c",
+        "fixing_commit_sha": "b2afba580b4b9285973b57812741857cf480be4c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+        "checkout_command": "git checkout b2afba580b4b9285973b57812741857cf480be4c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                320,
+                542,
+                544,
+                551,
+                552,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b2afba580b4b9285973b57812741857cf480be4c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                193,
+                324,
+                1262,
+                1489
+              ]
+            },
+            "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.3",
+        "affected_version_sha": "172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "affected_version_url": "https://github.com/apache/HBase/commit/172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "fixing_commit_sha": "ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "checkout_command": "git checkout ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/172373d1f02bbe0e3da37ec25efc97d0ec69fc96/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                320,
+                542,
+                544,
+                551,
+                552,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/ac5bb8155b618194fe9cf1131f0e72c99b7b534c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                194,
+                325,
+                1263,
+                1488
+              ]
+            },
+            "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.3",
+        "affected_version_sha": "172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "affected_version_url": "https://github.com/apache/HBase/commit/172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "fixing_commit_sha": "2702f23a4addaa459d6f221c0008be0c556f672d",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+        "checkout_command": "git checkout 2702f23a4addaa459d6f221c0008be0c556f672d",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/172373d1f02bbe0e3da37ec25efc97d0ec69fc96/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": [
+                21,
+                22,
+                23,
+                373
+              ]
+            },
+            "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/172373d1f02bbe0e3da37ec25efc97d0ec69fc96/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                543,
+                552,
+                585
+              ]
+            },
+            "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.3",
+        "affected_version_sha": "172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "affected_version_url": "https://github.com/apache/HBase/commit/172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "fixing_commit_sha": "c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "checkout_command": "git checkout c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/172373d1f02bbe0e3da37ec25efc97d0ec69fc96/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/172373d1f02bbe0e3da37ec25efc97d0ec69fc96/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                552,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.3",
+        "affected_version_sha": "172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "affected_version_url": "https://github.com/apache/HBase/commit/172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "fixing_commit_sha": "6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "checkout_command": "git checkout 6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/172373d1f02bbe0e3da37ec25efc97d0ec69fc96/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/172373d1f02bbe0e3da37ec25efc97d0ec69fc96/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                239,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                552,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.3",
+        "affected_version_sha": "172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "affected_version_url": "https://github.com/apache/HBase/commit/172373d1f02bbe0e3da37ec25efc97d0ec69fc96",
+        "fixing_commit_sha": "b2afba580b4b9285973b57812741857cf480be4c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+        "checkout_command": "git checkout b2afba580b4b9285973b57812741857cf480be4c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/172373d1f02bbe0e3da37ec25efc97d0ec69fc96/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                320,
+                542,
+                544,
+                551,
+                552,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b2afba580b4b9285973b57812741857cf480be4c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                193,
+                324,
+                1262,
+                1489
+              ]
+            },
+            "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.4",
+        "affected_version_sha": "fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "affected_version_url": "https://github.com/apache/HBase/commit/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "fixing_commit_sha": "ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "checkout_command": "git checkout ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                320,
+                542,
+                544,
+                551,
+                552,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/ac5bb8155b618194fe9cf1131f0e72c99b7b534c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                194,
+                325,
+                1263,
+                1488
+              ]
+            },
+            "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.4",
+        "affected_version_sha": "fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "affected_version_url": "https://github.com/apache/HBase/commit/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "fixing_commit_sha": "2702f23a4addaa459d6f221c0008be0c556f672d",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+        "checkout_command": "git checkout 2702f23a4addaa459d6f221c0008be0c556f672d",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": [
+                21,
+                22,
+                23,
+                373
+              ]
+            },
+            "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                543,
+                552,
+                585
+              ]
+            },
+            "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.4",
+        "affected_version_sha": "fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "affected_version_url": "https://github.com/apache/HBase/commit/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "fixing_commit_sha": "c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "checkout_command": "git checkout c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                552,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.4",
+        "affected_version_sha": "fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "affected_version_url": "https://github.com/apache/HBase/commit/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "fixing_commit_sha": "6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "checkout_command": "git checkout 6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "modified_lines": [
+                383
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                239,
+                249,
+                252,
+                320,
+                411,
+                542,
+                544,
+                551,
+                552,
+                1359,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1589,
+                1590,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "1.4.4",
+        "affected_version_sha": "fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "affected_version_url": "https://github.com/apache/HBase/commit/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b",
+        "fixing_commit_sha": "b2afba580b4b9285973b57812741857cf480be4c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+        "checkout_command": "git checkout b2afba580b4b9285973b57812741857cf480be4c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/fe146eb48c24d56dbcd2f669bb5ff8197e6c918b/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                145,
+                192,
+                199,
+                249,
+                320,
+                542,
+                544,
+                551,
+                552,
+                1383,
+                1384,
+                1482,
+                1492,
+                1493,
+                1498,
+                1499,
+                1573,
+                1588,
+                1594,
+                1597,
+                1598
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b2afba580b4b9285973b57812741857cf480be4c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                193,
+                324,
+                1262,
+                1489
+              ]
+            },
+            "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "checkout_command": "git checkout ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/ac5bb8155b618194fe9cf1131f0e72c99b7b534c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
+              "unidentified_lines": [
+                76
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                117,
+                150,
+                157,
+                188,
+                192,
+                324,
+                327,
+                459,
+                461,
+                468,
+                469,
+                1262,
+                1283,
+                1284,
+                1385,
+                1395,
+                1396,
+                1401,
+                1402,
+                1474,
+                1488,
+                1489,
+                1493,
+                1496,
+                1497
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/ac5bb8155b618194fe9cf1131f0e72c99b7b534c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "2702f23a4addaa459d6f221c0008be0c556f672d",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+        "checkout_command": "git checkout 2702f23a4addaa459d6f221c0008be0c556f672d",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                117,
+                150,
+                157,
+                188,
+                327,
+                459,
+                461,
+                468,
+                1283,
+                1284,
+                1385,
+                1395,
+                1396,
+                1401,
+                1402,
+                1474,
+                1488,
+                1493,
+                1496,
+                1497
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/2702f23a4addaa459d6f221c0008be0c556f672d",
+              "snapshot_url": "https://github.com/apache/HBase/tree/2702f23a4addaa459d6f221c0008be0c556f672d/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                251,
+                409,
+                543,
+                552,
+                585,
+                1357,
+                1587,
+                1588
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "checkout_command": "git checkout c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                117,
+                150,
+                157,
+                188,
+                327,
+                459,
+                461,
+                468,
+                469,
+                1283,
+                1284,
+                1385,
+                1395,
+                1396,
+                1401,
+                1402,
+                1474,
+                1488,
+                1493,
+                1496,
+                1497
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
+              "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                253,
+                411,
+                1359,
+                1589,
+                1590
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "checkout_command": "git checkout 6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                117,
+                150,
+                157,
+                188,
+                327,
+                459,
+                461,
+                468,
+                469,
+                1283,
+                1284,
+                1385,
+                1395,
+                1396,
+                1401,
+                1402,
+                1474,
+                1488,
+                1493,
+                1496,
+                1497
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
+              "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": [
+                239,
+                253,
+                411,
+                1359,
+                1589,
+                1590
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "2.0.0",
+        "affected_version_sha": "7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "affected_version_url": "https://github.com/apache/HBase/commit/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1",
+        "fixing_commit_sha": "b2afba580b4b9285973b57812741857cf480be4c",
+        "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+        "checkout_command": "git checkout b2afba580b4b9285973b57812741857cf480be4c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b2afba580b4b9285973b57812741857cf480be4c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
+              "unidentified_lines": [
+                76
+              ]
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/HBase/tree/7483b111e4da77adbfc8062b3b22cbe7c2cb91c1/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "modified_lines": [
+                117,
+                150,
+                157,
+                188,
+                192,
+                324,
+                327,
+                459,
+                461,
+                468,
+                469,
+                1262,
+                1283,
+                1284,
+                1385,
+                1395,
+                1396,
+                1401,
+                1402,
+                1474,
+                1488,
+                1489,
+                1493,
+                1496,
+                1497
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
+              "snapshot_url": "https://github.com/apache/HBase/tree/b2afba580b4b9285973b57812741857cf480be4c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
+              "unidentified_lines": []
+            },
+            "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
+          }
+        ]
+      }
+    ]
+  }
+}
