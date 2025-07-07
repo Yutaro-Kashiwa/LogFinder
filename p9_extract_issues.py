@@ -107,7 +107,6 @@ def main():
         "HBASE-11906",
         "HBASE-17069",
         "HBASE-14291",
-        "HBASE-13262",
         "HBASE-20723",
         "HBASE-24813"
     ]

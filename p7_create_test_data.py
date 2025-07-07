@@ -265,11 +265,12 @@ class GitDiffAnalyzer:
             general_diff_output = self.repo.git.diff(
                 affected_version_sha,
                 fix_commit_sha,
-                '--find-copies-harder',
-                '--diff-algorithm=histogram',
-                '-M90%',  # Detect renames with 90% similarity
-                '-C90%',  # Detect copies with 90% similarity
-                '--full-index'  # Show full object names
+                '--diff-algorithm=myers',  # GitHub's default
+                '-M50%', # GitHub's default
+                '--full-index',  # Show full object names
+                '--ignore-all-space',
+                '--ignore-space-at-eol',
+                '--ignore-blank-lines'
             )
             
             # Parse the general diff to understand all changes
@@ -397,7 +398,8 @@ class GitDiffAnalyzer:
         # Extract line numbers of deletions in affected version
         modified_lines = set()
         unidentified_lines = set()
-        
+        unidentified_contents = list()
+
         deleted_lines_diff = diff_results[file_path].get('deleted_lines', [])
         
         # Create a list of unmatched deleted lines to avoid duplicate matching
@@ -435,6 +437,8 @@ class GitDiffAnalyzer:
 
                     if not line_matched:
                         unidentified_lines.add(change['line_number'])
+                        unidentified_contents.append({"line_no": change['line_number'], "contents":f"'{change['content']}'"})
+                        # unidentified_lines.add(f"'{change['content']}'")
                         pass
 
         
@@ -448,7 +452,8 @@ class GitDiffAnalyzer:
                 'fixing_commit_url': f"https://github.com/{self.owner}/{self.project}/commit/{fix_commit_sha}",
                 'snapshot_url': f"https://github.com/{self.owner}/{self.project}/tree/{fix_commit_sha}/{lookup_path}",  # Use the actual path in fix commit
                 'filename': lookup_path,  # Use the actual path in fix commit
-                'unidentified_lines': sorted(unidentified_lines)
+                'unidentified_lines': sorted(unidentified_lines),
+                'unidentified_contents': unidentified_contents
             }
         }
         

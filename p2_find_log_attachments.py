@@ -75,4 +75,3 @@ def find_issues_with_log_attachments():
 
 if __name__ == "__main__":
     find_issues_with_log_attachments()
-    analyze_issues_by_project()
