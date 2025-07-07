@@ -48,25 +48,10 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/676a0126bc6dddc17796d18d8b27165312a1f1ed",
               "snapshot_url": "https://github.com/apache/HBase/tree/676a0126bc6dddc17796d18d8b27165312a1f1ed/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 757a0952ce4674704d91a858b42ea94be8199b81 676a0126bc6dddc17796d18d8b27165312a1f1ed -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
-          },
-          {
-            "affected_version": {
-              "snapshot_url": "https://github.com/apache/HBase/tree/757a0952ce4674704d91a858b42ea94be8199b81/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java",
-              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java",
-              "modified_lines": [
-                95
-              ]
-            },
-            "fixing_commit": {
-              "fixing_commit_url": "https://github.com/apache/HBase/commit/676a0126bc6dddc17796d18d8b27165312a1f1ed",
-              "snapshot_url": "https://github.com/apache/HBase/tree/676a0126bc6dddc17796d18d8b27165312a1f1ed/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java",
-              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java",
-              "unidentified_lines": []
-            },
-            "diff_command": "git diff 757a0952ce4674704d91a858b42ea94be8199b81 676a0126bc6dddc17796d18d8b27165312a1f1ed -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java"
           }
         ]
       },
@@ -90,25 +75,10 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/1c127220f0aba64e9a5732fc141e5a0ff794cd48",
               "snapshot_url": "https://github.com/apache/HBase/tree/1c127220f0aba64e9a5732fc141e5a0ff794cd48/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 757a0952ce4674704d91a858b42ea94be8199b81 1c127220f0aba64e9a5732fc141e5a0ff794cd48 -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
-          },
-          {
-            "affected_version": {
-              "snapshot_url": "https://github.com/apache/HBase/tree/757a0952ce4674704d91a858b42ea94be8199b81/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java",
-              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java",
-              "modified_lines": [
-                95
-              ]
-            },
-            "fixing_commit": {
-              "fixing_commit_url": "https://github.com/apache/HBase/commit/1c127220f0aba64e9a5732fc141e5a0ff794cd48",
-              "snapshot_url": "https://github.com/apache/HBase/tree/1c127220f0aba64e9a5732fc141e5a0ff794cd48/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java",
-              "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java",
-              "unidentified_lines": []
-            },
-            "diff_command": "git diff 757a0952ce4674704d91a858b42ea94be8199b81 1c127220f0aba64e9a5732fc141e5a0ff794cd48 -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/wal/HLogUtil.java"
           }
         ]
       },
@@ -132,6 +102,12 @@
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
               "unidentified_lines": [
                 764
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 764,
+                  "contents": "'      nextSeqid += this.flushPerChanges + 10000000; // add another extra 10million'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 676a0126bc6dddc17796d18d8b27165312a1f1ed -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"
@@ -158,6 +134,12 @@
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java",
               "unidentified_lines": [
                 766
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 766,
+                  "contents": "'      nextSeqid += this.flushPerChanges + 10000000; // add another extra 10million'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 1c127220f0aba64e9a5732fc141e5a0ff794cd48 -- hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java"

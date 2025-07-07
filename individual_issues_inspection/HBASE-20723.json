@@ -71,6 +71,24 @@
                 325,
                 1487,
                 1488
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 194,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 325,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1487,
+                  "contents": "'    WriterAndPath createWAP(byte[] region, Entry entry, Path rootdir) throws IOException {'"
+                },
+                {
+                  "line_no": 1488,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -102,6 +120,24 @@
                 22,
                 23,
                 373
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 21,
+                  "contents": "'import java.io.Closeable;'"
+                },
+                {
+                  "line_no": 22,
+                  "contents": "'import java.io.DataInput;'"
+                },
+                {
+                  "line_no": 23,
+                  "contents": "'import java.io.DataOutput;'"
+                },
+                {
+                  "line_no": 373,
+                  "contents": "'      writer = logWriterClass.newInstance();'"
+                }
               ]
             },
             "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
@@ -146,6 +182,28 @@
                 585,
                 1357,
                 1586
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 543,
+                  "contents": "'   * @param fileBeingSplit the file being split currently. Used to generate tmp file name.'"
+                },
+                {
+                  "line_no": 552,
+                  "contents": "'      final Entry logEntry, final Path rootDir, String fileBeingSplit)'"
+                },
+                {
+                  "line_no": 585,
+                  "contents": "'    fileName = getTmpRecoveredEditsFileName(fileName + \"-\" + fileBeingSplit);'"
+                },
+                {
+                  "line_no": 1357,
+                  "contents": "'    void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1586,
+                  "contents": "'    WriterAndPath createWAP(byte[] region, Entry entry, Path rootdir) throws IOException {'"
+                }
               ]
             },
             "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -172,7 +230,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -214,6 +273,16 @@
               "unidentified_lines": [
                 1359,
                 1588
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 1359,
+                  "contents": "'    void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1588,
+                  "contents": "'    WriterAndPath createWAP(byte[] region, Entry entry, Path rootdir) throws IOException {'"
+                }
               ]
             },
             "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -240,7 +309,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -283,6 +353,16 @@
               "unidentified_lines": [
                 1359,
                 1588
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 1359,
+                  "contents": "'    void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1588,
+                  "contents": "'    WriterAndPath createWAP(byte[] region, Entry entry, Path rootdir) throws IOException {'"
+                }
               ]
             },
             "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -334,6 +414,24 @@
                 324,
                 1488,
                 1489
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 193,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 324,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1488,
+                  "contents": "'    WriterAndPath createWAP(byte[] region, Entry entry, Path rootdir) throws IOException {'"
+                },
+                {
+                  "line_no": 1489,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 10b9b9fae6b557157644fb9a0dc641bb8cb26e39 b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -385,6 +483,24 @@
                 325,
                 1263,
                 1488
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 194,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 325,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1263,
+                  "contents": "'    private void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1488,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -416,6 +532,24 @@
                 22,
                 23,
                 373
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 21,
+                  "contents": "'import java.io.Closeable;'"
+                },
+                {
+                  "line_no": 22,
+                  "contents": "'import java.io.DataInput;'"
+                },
+                {
+                  "line_no": 23,
+                  "contents": "'import java.io.DataOutput;'"
+                },
+                {
+                  "line_no": 373,
+                  "contents": "'      writer = logWriterClass.newInstance();'"
+                }
               ]
             },
             "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
@@ -460,6 +594,20 @@
                 543,
                 552,
                 585
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 543,
+                  "contents": "'   * @param fileBeingSplit the file being split currently. Used to generate tmp file name.'"
+                },
+                {
+                  "line_no": 552,
+                  "contents": "'      final Entry logEntry, final Path rootDir, String fileBeingSplit)'"
+                },
+                {
+                  "line_no": 585,
+                  "contents": "'    fileName = getTmpRecoveredEditsFileName(fileName + \"-\" + fileBeingSplit);'"
+                }
               ]
             },
             "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -486,7 +634,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -527,7 +676,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -553,7 +703,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -595,7 +746,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -646,6 +798,24 @@
                 324,
                 1262,
                 1489
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 193,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 324,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1262,
+                  "contents": "'    private void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1489,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 4b25debc8336198c5a0653fb5648e9ac8b69ca5e b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -697,6 +867,24 @@
                 325,
                 1263,
                 1488
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 194,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 325,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1263,
+                  "contents": "'    private void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1488,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -728,6 +916,24 @@
                 22,
                 23,
                 373
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 21,
+                  "contents": "'import java.io.Closeable;'"
+                },
+                {
+                  "line_no": 22,
+                  "contents": "'import java.io.DataInput;'"
+                },
+                {
+                  "line_no": 23,
+                  "contents": "'import java.io.DataOutput;'"
+                },
+                {
+                  "line_no": 373,
+                  "contents": "'      writer = logWriterClass.newInstance();'"
+                }
               ]
             },
             "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
@@ -772,6 +978,20 @@
                 543,
                 552,
                 585
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 543,
+                  "contents": "'   * @param fileBeingSplit the file being split currently. Used to generate tmp file name.'"
+                },
+                {
+                  "line_no": 552,
+                  "contents": "'      final Entry logEntry, final Path rootDir, String fileBeingSplit)'"
+                },
+                {
+                  "line_no": 585,
+                  "contents": "'    fileName = getTmpRecoveredEditsFileName(fileName + \"-\" + fileBeingSplit);'"
+                }
               ]
             },
             "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -798,7 +1018,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -839,7 +1060,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -865,7 +1087,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -907,7 +1130,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -958,6 +1182,24 @@
                 324,
                 1262,
                 1489
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 193,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 324,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1262,
+                  "contents": "'    private void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1489,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff b4ec89059cc3a7416c2012bb1a9d31f1cd34b78c b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1009,6 +1251,24 @@
                 325,
                 1263,
                 1488
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 194,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 325,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1263,
+                  "contents": "'    private void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1488,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1040,6 +1300,24 @@
                 22,
                 23,
                 373
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 21,
+                  "contents": "'import java.io.Closeable;'"
+                },
+                {
+                  "line_no": 22,
+                  "contents": "'import java.io.DataInput;'"
+                },
+                {
+                  "line_no": 23,
+                  "contents": "'import java.io.DataOutput;'"
+                },
+                {
+                  "line_no": 373,
+                  "contents": "'      writer = logWriterClass.newInstance();'"
+                }
               ]
             },
             "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
@@ -1084,6 +1362,20 @@
                 543,
                 552,
                 585
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 543,
+                  "contents": "'   * @param fileBeingSplit the file being split currently. Used to generate tmp file name.'"
+                },
+                {
+                  "line_no": 552,
+                  "contents": "'      final Entry logEntry, final Path rootDir, String fileBeingSplit)'"
+                },
+                {
+                  "line_no": 585,
+                  "contents": "'    fileName = getTmpRecoveredEditsFileName(fileName + \"-\" + fileBeingSplit);'"
+                }
               ]
             },
             "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1110,7 +1402,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -1151,7 +1444,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -1177,7 +1471,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -1219,7 +1514,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -1270,6 +1566,24 @@
                 324,
                 1262,
                 1489
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 193,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 324,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1262,
+                  "contents": "'    private void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1489,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 172373d1f02bbe0e3da37ec25efc97d0ec69fc96 b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1321,6 +1635,24 @@
                 325,
                 1263,
                 1488
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 194,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 325,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1263,
+                  "contents": "'    private void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1488,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1352,6 +1684,24 @@
                 22,
                 23,
                 373
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 21,
+                  "contents": "'import java.io.Closeable;'"
+                },
+                {
+                  "line_no": 22,
+                  "contents": "'import java.io.DataInput;'"
+                },
+                {
+                  "line_no": 23,
+                  "contents": "'import java.io.DataOutput;'"
+                },
+                {
+                  "line_no": 373,
+                  "contents": "'      writer = logWriterClass.newInstance();'"
+                }
               ]
             },
             "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
@@ -1396,6 +1746,20 @@
                 543,
                 552,
                 585
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 543,
+                  "contents": "'   * @param fileBeingSplit the file being split currently. Used to generate tmp file name.'"
+                },
+                {
+                  "line_no": 552,
+                  "contents": "'      final Entry logEntry, final Path rootDir, String fileBeingSplit)'"
+                },
+                {
+                  "line_no": 585,
+                  "contents": "'    fileName = getTmpRecoveredEditsFileName(fileName + \"-\" + fileBeingSplit);'"
+                }
               ]
             },
             "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1422,7 +1786,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -1463,7 +1828,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad",
               "snapshot_url": "https://github.com/apache/HBase/tree/c7923def7fa4ececdcf6593b3c8a3d97ecc2caad/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -1489,7 +1855,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/DefaultWALProvider.java"
           },
@@ -1531,7 +1898,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/6fa9f0bea936b984bbe5a0207a1b367786c2c113",
               "snapshot_url": "https://github.com/apache/HBase/tree/6fa9f0bea936b984bbe5a0207a1b367786c2c113/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -1582,6 +1950,24 @@
                 324,
                 1262,
                 1489
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 193,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker,'"
+                },
+                {
+                  "line_no": 324,
+                  "contents": "'        splitLogWorkerCoordination.markCorrupted(rootDir, logfile.getPath().getName(), fs);'"
+                },
+                {
+                  "line_no": 1262,
+                  "contents": "'    private void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1489,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir, fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff fe146eb48c24d56dbcd2f669bb5ff8197e6c918b b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1608,6 +1994,12 @@
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
               "unidentified_lines": [
                 76
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 76,
+                  "contents": "'      writer.init(fs, path, conf, overwritable, blocksize);'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java"
@@ -1648,7 +2040,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/ac5bb8155b618194fe9cf1131f0e72c99b7b534c",
               "snapshot_url": "https://github.com/apache/HBase/tree/ac5bb8155b618194fe9cf1131f0e72c99b7b534c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 ac5bb8155b618194fe9cf1131f0e72c99b7b534c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }
@@ -1702,6 +2095,40 @@
                 1357,
                 1587,
                 1588
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 251,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker, cp, mode);'"
+                },
+                {
+                  "line_no": 409,
+                  "contents": "'      csm.getSplitLogWorkerCoordination().markCorrupted(rootDir,'"
+                },
+                {
+                  "line_no": 543,
+                  "contents": "'   * @param fileBeingSplit the file being split currently. Used to generate tmp file name.'"
+                },
+                {
+                  "line_no": 552,
+                  "contents": "'      final Entry logEntry, final Path rootDir, String fileBeingSplit)'"
+                },
+                {
+                  "line_no": 585,
+                  "contents": "'    fileName = getTmpRecoveredEditsFileName(fileName + \"-\" + fileBeingSplit);'"
+                },
+                {
+                  "line_no": 1357,
+                  "contents": "'    void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1587,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir,'"
+                },
+                {
+                  "line_no": 1588,
+                  "contents": "'          fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 2702f23a4addaa459d6f221c0008be0c556f672d -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1754,6 +2181,28 @@
                 1359,
                 1589,
                 1590
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 253,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker, cp, mode);'"
+                },
+                {
+                  "line_no": 411,
+                  "contents": "'      csm.getSplitLogWorkerCoordination().markCorrupted(rootDir,'"
+                },
+                {
+                  "line_no": 1359,
+                  "contents": "'    void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1589,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir,'"
+                },
+                {
+                  "line_no": 1590,
+                  "contents": "'          fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 c7923def7fa4ececdcf6593b3c8a3d97ecc2caad -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1807,6 +2256,32 @@
                 1359,
                 1589,
                 1590
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 239,
+                  "contents": "'   * @param rootDir'"
+                },
+                {
+                  "line_no": 253,
+                  "contents": "'    WALSplitter s = new WALSplitter(factory, conf, rootDir, fs, idChecker, cp, mode);'"
+                },
+                {
+                  "line_no": 411,
+                  "contents": "'      csm.getSplitLogWorkerCoordination().markCorrupted(rootDir,'"
+                },
+                {
+                  "line_no": 1359,
+                  "contents": "'    void deleteOneWithFewerEntries(WriterAndPath wap, Path dst) throws IOException {'"
+                },
+                {
+                  "line_no": 1589,
+                  "contents": "'      Path regionedits = getRegionSplitEditsPath(fs, entry, rootdir,'"
+                },
+                {
+                  "line_no": 1590,
+                  "contents": "'          fileBeingSplit.getPath().getName());'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 6fa9f0bea936b984bbe5a0207a1b367786c2c113 -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
@@ -1833,6 +2308,12 @@
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java",
               "unidentified_lines": [
                 76
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 76,
+                  "contents": "'      writer.init(fs, path, conf, overwritable, blocksize);'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/FSHLogProvider.java"
@@ -1873,7 +2354,8 @@
               "fixing_commit_url": "https://github.com/apache/HBase/commit/b2afba580b4b9285973b57812741857cf480be4c",
               "snapshot_url": "https://github.com/apache/HBase/tree/b2afba580b4b9285973b57812741857cf480be4c/hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java",
-              "unidentified_lines": []
+              "unidentified_lines": [],
+              "unidentified_contents": []
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 b2afba580b4b9285973b57812741857cf480be4c -- hbase-server/src/main/java/org/apache/hadoop/hbase/wal/WALSplitter.java"
           }

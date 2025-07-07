@@ -41,6 +41,12 @@
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
               "unidentified_lines": [
                 863
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 863,
+                  "contents": "'          int index = serversToIndex.get(sn);'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 e95cf8fdb4c78458e3058198e13c6d3cbd85a0e2 -- hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java"
@@ -67,6 +73,12 @@
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
               "unidentified_lines": [
                 406
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 406,
+                  "contents": "'          int index = serversToIndex.get(sn);'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 dab6fe298bddd3353f1e6ede6af8d2a0f547d01c -- hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java"
@@ -93,6 +105,12 @@
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
               "unidentified_lines": [
                 847
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 847,
+                  "contents": "'          int index = serversToIndex.get(sn);'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 7622d1b3e8e82add7175d1b6153fd0735a93498f -- hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java"
@@ -119,6 +137,12 @@
               "filename": "hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java",
               "unidentified_lines": [
                 861
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 861,
+                  "contents": "'          int index = serversToIndex.get(sn);'"
+                }
               ]
             },
             "diff_command": "git diff 7483b111e4da77adbfc8062b3b22cbe7c2cb91c1 0b081303b949508caace40218c1a16d8ba59885d -- hbase-server/src/main/java/org/apache/hadoop/hbase/master/balancer/BaseLoadBalancer.java"

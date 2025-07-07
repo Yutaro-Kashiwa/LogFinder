@@ -61,7 +61,6 @@
                 307,
                 308,
                 309,
-                316,
                 322,
                 324,
                 325,
@@ -80,6 +79,7 @@
                 621,
                 634,
                 635,
+                636,
                 637,
                 638,
                 640,
@@ -87,6 +87,7 @@
                 647,
                 648,
                 649,
+                651,
                 652,
                 654,
                 655,
@@ -109,8 +110,7 @@
                 678,
                 682,
                 683,
-                724,
-                898
+                910
               ]
             },
             "fixing_commit": {
@@ -148,6 +148,128 @@
                 748,
                 749,
                 750
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 30,
+                  "contents": "'import java.net.NoRouteToHostException;'"
+                },
+                {
+                  "line_no": 323,
+                  "contents": "'        initializeAuth(mySid, authServer, authLearner, quorumCnxnThreadsSize, quorumSaslAuthEnabled);'"
+                },
+                {
+                  "line_no": 331,
+                  "contents": "'    private void initializeAuth(final long mySid, final QuorumAuthServer authServer,'"
+                },
+                {
+                  "line_no": 332,
+                  "contents": "'        final QuorumAuthLearner authLearner, final int quorumCnxnThreadsSize, final boolean quorumSaslAuthEnabled) {'"
+                },
+                {
+                  "line_no": 354,
+                  "contents": "'                Thread t = new Thread('"
+                },
+                {
+                  "line_no": 355,
+                  "contents": "'                    group,'"
+                },
+                {
+                  "line_no": 356,
+                  "contents": "'                    r,'"
+                },
+                {
+                  "line_no": 357,
+                  "contents": "'                    \"QuorumConnectionThread-[myid=\" + mySid + \"]-\" + threadIndex.getAndIncrement());'"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'        this.connectionExecutor = new ThreadPoolExecutor(3, quorumCnxnThreadsSize, 60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), daemonThFactory);'"
+                },
+                {
+                  "line_no": 367,
+                  "contents": "'        InetSocketAddress address = self.getVotingView().get(sid).electionAddr.getReachableOrOne();'"
+                },
+                {
+                  "line_no": 368,
+                  "contents": "'        sock.connect(address, cnxTO);'"
+                },
+                {
+                  "line_no": 403,
+                  "contents": "'            connectionExecutor.execute(new QuorumConnectionReqThread(sock, sid));'"
+                },
+                {
+                  "line_no": 702,
+                  "contents": "'            LOG.debug(\"Opening channel to server {}\", sid);'"
+                },
+                {
+                  "line_no": 704,
+                  "contents": "'                sock = self.getX509Util().createSSLSocket();'"
+                },
+                {
+                  "line_no": 709,
+                  "contents": "'            sock.connect(electionAddr.getReachableOrOne(), cnxTO);'"
+                },
+                {
+                  "line_no": 710,
+                  "contents": "'            if (sock instanceof SSLSocket) {'"
+                },
+                {
+                  "line_no": 711,
+                  "contents": "'                SSLSocket sslSock = (SSLSocket) sock;'"
+                },
+                {
+                  "line_no": 713,
+                  "contents": "'                LOG.info(\"SSL handshake complete with {} - {} - {}\",'"
+                },
+                {
+                  "line_no": 714,
+                  "contents": "'                         sslSock.getRemoteSocketAddress(),'"
+                },
+                {
+                  "line_no": 715,
+                  "contents": "'                         sslSock.getSession().getProtocol(),'"
+                },
+                {
+                  "line_no": 716,
+                  "contents": "'                         sslSock.getSession().getCipherSuite());'"
+                },
+                {
+                  "line_no": 719,
+                  "contents": "'            LOG.debug(\"Connected to server {} using election address: {}:{}\",'"
+                },
+                {
+                  "line_no": 720,
+                  "contents": "'                      sid, sock.getInetAddress(), sock.getPort());'"
+                },
+                {
+                  "line_no": 736,
+                  "contents": "'            LOG.warn(\"Cannot open channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 740,
+                  "contents": "'            LOG.warn(\"Cannot open secure channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 743,
+                  "contents": "'        } catch (NoRouteToHostException e) {'"
+                },
+                {
+                  "line_no": 744,
+                  "contents": "'            LOG.warn(\"None of the addresses ({}) are reachable for sid {}\", electionAddr, sid, e);'"
+                },
+                {
+                  "line_no": 748,
+                  "contents": "'            LOG.warn(\"Cannot open channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 749,
+                  "contents": "'            closeSocket(sock);'"
+                },
+                {
+                  "line_no": 750,
+                  "contents": "'            return false;'"
+                }
               ]
             },
             "diff_command": "git diff c11b7e26bc554b8523dc929761dd28808913f091 4d8caf9851f63073145996fd4a535278014d01be -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"
@@ -203,7 +325,6 @@
                 325,
                 326,
                 327,
-                331,
                 334,
                 341,
                 349,
@@ -270,7 +391,15 @@
               "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e30991d8aa068c6ede2c33476ab4a25493fd1c49",
               "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e30991d8aa068c6ede2c33476ab4a25493fd1c49/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
               "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
-              "unidentified_lines": []
+              "unidentified_lines": [
+                364
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 364,
+                  "contents": "'     * If this server has initiated the connection, then it gives up on the'"
+                }
+              ]
             },
             "diff_command": "git diff c11b7e26bc554b8523dc929761dd28808913f091 e30991d8aa068c6ede2c33476ab4a25493fd1c49 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"
           }
@@ -303,7 +432,6 @@
                 307,
                 308,
                 309,
-                316,
                 322,
                 324,
                 325,
@@ -322,6 +450,7 @@
                 621,
                 634,
                 635,
+                636,
                 637,
                 638,
                 640,
@@ -329,6 +458,7 @@
                 647,
                 648,
                 649,
+                651,
                 652,
                 654,
                 655,
@@ -351,8 +481,7 @@
                 678,
                 682,
                 683,
-                724,
-                898
+                910
               ]
             },
             "fixing_commit": {
@@ -390,6 +519,128 @@
                 748,
                 749,
                 750
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 30,
+                  "contents": "'import java.net.NoRouteToHostException;'"
+                },
+                {
+                  "line_no": 323,
+                  "contents": "'        initializeAuth(mySid, authServer, authLearner, quorumCnxnThreadsSize, quorumSaslAuthEnabled);'"
+                },
+                {
+                  "line_no": 331,
+                  "contents": "'    private void initializeAuth(final long mySid, final QuorumAuthServer authServer,'"
+                },
+                {
+                  "line_no": 332,
+                  "contents": "'        final QuorumAuthLearner authLearner, final int quorumCnxnThreadsSize, final boolean quorumSaslAuthEnabled) {'"
+                },
+                {
+                  "line_no": 354,
+                  "contents": "'                Thread t = new Thread('"
+                },
+                {
+                  "line_no": 355,
+                  "contents": "'                    group,'"
+                },
+                {
+                  "line_no": 356,
+                  "contents": "'                    r,'"
+                },
+                {
+                  "line_no": 357,
+                  "contents": "'                    \"QuorumConnectionThread-[myid=\" + mySid + \"]-\" + threadIndex.getAndIncrement());'"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'        this.connectionExecutor = new ThreadPoolExecutor(3, quorumCnxnThreadsSize, 60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), daemonThFactory);'"
+                },
+                {
+                  "line_no": 367,
+                  "contents": "'        InetSocketAddress address = self.getVotingView().get(sid).electionAddr.getReachableOrOne();'"
+                },
+                {
+                  "line_no": 368,
+                  "contents": "'        sock.connect(address, cnxTO);'"
+                },
+                {
+                  "line_no": 403,
+                  "contents": "'            connectionExecutor.execute(new QuorumConnectionReqThread(sock, sid));'"
+                },
+                {
+                  "line_no": 702,
+                  "contents": "'            LOG.debug(\"Opening channel to server {}\", sid);'"
+                },
+                {
+                  "line_no": 704,
+                  "contents": "'                sock = self.getX509Util().createSSLSocket();'"
+                },
+                {
+                  "line_no": 709,
+                  "contents": "'            sock.connect(electionAddr.getReachableOrOne(), cnxTO);'"
+                },
+                {
+                  "line_no": 710,
+                  "contents": "'            if (sock instanceof SSLSocket) {'"
+                },
+                {
+                  "line_no": 711,
+                  "contents": "'                SSLSocket sslSock = (SSLSocket) sock;'"
+                },
+                {
+                  "line_no": 713,
+                  "contents": "'                LOG.info(\"SSL handshake complete with {} - {} - {}\",'"
+                },
+                {
+                  "line_no": 714,
+                  "contents": "'                         sslSock.getRemoteSocketAddress(),'"
+                },
+                {
+                  "line_no": 715,
+                  "contents": "'                         sslSock.getSession().getProtocol(),'"
+                },
+                {
+                  "line_no": 716,
+                  "contents": "'                         sslSock.getSession().getCipherSuite());'"
+                },
+                {
+                  "line_no": 719,
+                  "contents": "'            LOG.debug(\"Connected to server {} using election address: {}:{}\",'"
+                },
+                {
+                  "line_no": 720,
+                  "contents": "'                      sid, sock.getInetAddress(), sock.getPort());'"
+                },
+                {
+                  "line_no": 736,
+                  "contents": "'            LOG.warn(\"Cannot open channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 740,
+                  "contents": "'            LOG.warn(\"Cannot open secure channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 743,
+                  "contents": "'        } catch (NoRouteToHostException e) {'"
+                },
+                {
+                  "line_no": 744,
+                  "contents": "'            LOG.warn(\"None of the addresses ({}) are reachable for sid {}\", electionAddr, sid, e);'"
+                },
+                {
+                  "line_no": 748,
+                  "contents": "'            LOG.warn(\"Cannot open channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 749,
+                  "contents": "'            closeSocket(sock);'"
+                },
+                {
+                  "line_no": 750,
+                  "contents": "'            return false;'"
+                }
               ]
             },
             "diff_command": "git diff c11b7e26bc554b8523dc929761dd28808913f091 97db6936745bdf548f90c2383647eab62d017254 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"
@@ -409,7 +660,6 @@
               "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f0fdd52973d373ffd9c86b81d99842dc2c7f660e/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
               "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
               "modified_lines": [
-                250,
                 294,
                 295,
                 296,
@@ -424,7 +674,6 @@
                 314,
                 315,
                 316,
-                323,
                 329,
                 331,
                 332,
@@ -440,8 +689,10 @@
                 387,
                 394,
                 625,
+                627,
                 640,
                 641,
+                642,
                 643,
                 644,
                 646,
@@ -449,6 +700,7 @@
                 653,
                 654,
                 655,
+                657,
                 658,
                 660,
                 661,
@@ -471,8 +723,7 @@
                 684,
                 688,
                 689,
-                730,
-                904
+                916
               ]
             },
             "fixing_commit": {
@@ -510,6 +761,128 @@
                 748,
                 749,
                 750
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 30,
+                  "contents": "'import java.net.NoRouteToHostException;'"
+                },
+                {
+                  "line_no": 323,
+                  "contents": "'        initializeAuth(mySid, authServer, authLearner, quorumCnxnThreadsSize, quorumSaslAuthEnabled);'"
+                },
+                {
+                  "line_no": 331,
+                  "contents": "'    private void initializeAuth(final long mySid, final QuorumAuthServer authServer,'"
+                },
+                {
+                  "line_no": 332,
+                  "contents": "'        final QuorumAuthLearner authLearner, final int quorumCnxnThreadsSize, final boolean quorumSaslAuthEnabled) {'"
+                },
+                {
+                  "line_no": 354,
+                  "contents": "'                Thread t = new Thread('"
+                },
+                {
+                  "line_no": 355,
+                  "contents": "'                    group,'"
+                },
+                {
+                  "line_no": 356,
+                  "contents": "'                    r,'"
+                },
+                {
+                  "line_no": 357,
+                  "contents": "'                    \"QuorumConnectionThread-[myid=\" + mySid + \"]-\" + threadIndex.getAndIncrement());'"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'        this.connectionExecutor = new ThreadPoolExecutor(3, quorumCnxnThreadsSize, 60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), daemonThFactory);'"
+                },
+                {
+                  "line_no": 367,
+                  "contents": "'        InetSocketAddress address = self.getVotingView().get(sid).electionAddr.getReachableOrOne();'"
+                },
+                {
+                  "line_no": 368,
+                  "contents": "'        sock.connect(address, cnxTO);'"
+                },
+                {
+                  "line_no": 403,
+                  "contents": "'            connectionExecutor.execute(new QuorumConnectionReqThread(sock, sid));'"
+                },
+                {
+                  "line_no": 702,
+                  "contents": "'            LOG.debug(\"Opening channel to server {}\", sid);'"
+                },
+                {
+                  "line_no": 704,
+                  "contents": "'                sock = self.getX509Util().createSSLSocket();'"
+                },
+                {
+                  "line_no": 709,
+                  "contents": "'            sock.connect(electionAddr.getReachableOrOne(), cnxTO);'"
+                },
+                {
+                  "line_no": 710,
+                  "contents": "'            if (sock instanceof SSLSocket) {'"
+                },
+                {
+                  "line_no": 711,
+                  "contents": "'                SSLSocket sslSock = (SSLSocket) sock;'"
+                },
+                {
+                  "line_no": 713,
+                  "contents": "'                LOG.info(\"SSL handshake complete with {} - {} - {}\",'"
+                },
+                {
+                  "line_no": 714,
+                  "contents": "'                         sslSock.getRemoteSocketAddress(),'"
+                },
+                {
+                  "line_no": 715,
+                  "contents": "'                         sslSock.getSession().getProtocol(),'"
+                },
+                {
+                  "line_no": 716,
+                  "contents": "'                         sslSock.getSession().getCipherSuite());'"
+                },
+                {
+                  "line_no": 719,
+                  "contents": "'            LOG.debug(\"Connected to server {} using election address: {}:{}\",'"
+                },
+                {
+                  "line_no": 720,
+                  "contents": "'                      sid, sock.getInetAddress(), sock.getPort());'"
+                },
+                {
+                  "line_no": 736,
+                  "contents": "'            LOG.warn(\"Cannot open channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 740,
+                  "contents": "'            LOG.warn(\"Cannot open secure channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 743,
+                  "contents": "'        } catch (NoRouteToHostException e) {'"
+                },
+                {
+                  "line_no": 744,
+                  "contents": "'            LOG.warn(\"None of the addresses ({}) are reachable for sid {}\", electionAddr, sid, e);'"
+                },
+                {
+                  "line_no": 748,
+                  "contents": "'            LOG.warn(\"Cannot open channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 749,
+                  "contents": "'            closeSocket(sock);'"
+                },
+                {
+                  "line_no": 750,
+                  "contents": "'            return false;'"
+                }
               ]
             },
             "diff_command": "git diff f0fdd52973d373ffd9c86b81d99842dc2c7f660e 4d8caf9851f63073145996fd4a535278014d01be -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"
@@ -565,7 +938,6 @@
                 332,
                 333,
                 334,
-                338,
                 341,
                 348,
                 356,
@@ -632,7 +1004,15 @@
               "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e30991d8aa068c6ede2c33476ab4a25493fd1c49",
               "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e30991d8aa068c6ede2c33476ab4a25493fd1c49/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
               "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
-              "unidentified_lines": []
+              "unidentified_lines": [
+                364
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 364,
+                  "contents": "'     * If this server has initiated the connection, then it gives up on the'"
+                }
+              ]
             },
             "diff_command": "git diff f0fdd52973d373ffd9c86b81d99842dc2c7f660e e30991d8aa068c6ede2c33476ab4a25493fd1c49 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"
           }
@@ -651,7 +1031,6 @@
               "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f0fdd52973d373ffd9c86b81d99842dc2c7f660e/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
               "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
               "modified_lines": [
-                250,
                 294,
                 295,
                 296,
@@ -666,7 +1045,6 @@
                 314,
                 315,
                 316,
-                323,
                 329,
                 331,
                 332,
@@ -682,8 +1060,10 @@
                 387,
                 394,
                 625,
+                627,
                 640,
                 641,
+                642,
                 643,
                 644,
                 646,
@@ -691,6 +1071,7 @@
                 653,
                 654,
                 655,
+                657,
                 658,
                 660,
                 661,
@@ -713,8 +1094,7 @@
                 684,
                 688,
                 689,
-                730,
-                904
+                916
               ]
             },
             "fixing_commit": {
@@ -752,6 +1132,128 @@
                 748,
                 749,
                 750
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 30,
+                  "contents": "'import java.net.NoRouteToHostException;'"
+                },
+                {
+                  "line_no": 323,
+                  "contents": "'        initializeAuth(mySid, authServer, authLearner, quorumCnxnThreadsSize, quorumSaslAuthEnabled);'"
+                },
+                {
+                  "line_no": 331,
+                  "contents": "'    private void initializeAuth(final long mySid, final QuorumAuthServer authServer,'"
+                },
+                {
+                  "line_no": 332,
+                  "contents": "'        final QuorumAuthLearner authLearner, final int quorumCnxnThreadsSize, final boolean quorumSaslAuthEnabled) {'"
+                },
+                {
+                  "line_no": 354,
+                  "contents": "'                Thread t = new Thread('"
+                },
+                {
+                  "line_no": 355,
+                  "contents": "'                    group,'"
+                },
+                {
+                  "line_no": 356,
+                  "contents": "'                    r,'"
+                },
+                {
+                  "line_no": 357,
+                  "contents": "'                    \"QuorumConnectionThread-[myid=\" + mySid + \"]-\" + threadIndex.getAndIncrement());'"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'        this.connectionExecutor = new ThreadPoolExecutor(3, quorumCnxnThreadsSize, 60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), daemonThFactory);'"
+                },
+                {
+                  "line_no": 367,
+                  "contents": "'        InetSocketAddress address = self.getVotingView().get(sid).electionAddr.getReachableOrOne();'"
+                },
+                {
+                  "line_no": 368,
+                  "contents": "'        sock.connect(address, cnxTO);'"
+                },
+                {
+                  "line_no": 403,
+                  "contents": "'            connectionExecutor.execute(new QuorumConnectionReqThread(sock, sid));'"
+                },
+                {
+                  "line_no": 702,
+                  "contents": "'            LOG.debug(\"Opening channel to server {}\", sid);'"
+                },
+                {
+                  "line_no": 704,
+                  "contents": "'                sock = self.getX509Util().createSSLSocket();'"
+                },
+                {
+                  "line_no": 709,
+                  "contents": "'            sock.connect(electionAddr.getReachableOrOne(), cnxTO);'"
+                },
+                {
+                  "line_no": 710,
+                  "contents": "'            if (sock instanceof SSLSocket) {'"
+                },
+                {
+                  "line_no": 711,
+                  "contents": "'                SSLSocket sslSock = (SSLSocket) sock;'"
+                },
+                {
+                  "line_no": 713,
+                  "contents": "'                LOG.info(\"SSL handshake complete with {} - {} - {}\",'"
+                },
+                {
+                  "line_no": 714,
+                  "contents": "'                         sslSock.getRemoteSocketAddress(),'"
+                },
+                {
+                  "line_no": 715,
+                  "contents": "'                         sslSock.getSession().getProtocol(),'"
+                },
+                {
+                  "line_no": 716,
+                  "contents": "'                         sslSock.getSession().getCipherSuite());'"
+                },
+                {
+                  "line_no": 719,
+                  "contents": "'            LOG.debug(\"Connected to server {} using election address: {}:{}\",'"
+                },
+                {
+                  "line_no": 720,
+                  "contents": "'                      sid, sock.getInetAddress(), sock.getPort());'"
+                },
+                {
+                  "line_no": 736,
+                  "contents": "'            LOG.warn(\"Cannot open channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 740,
+                  "contents": "'            LOG.warn(\"Cannot open secure channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 743,
+                  "contents": "'        } catch (NoRouteToHostException e) {'"
+                },
+                {
+                  "line_no": 744,
+                  "contents": "'            LOG.warn(\"None of the addresses ({}) are reachable for sid {}\", electionAddr, sid, e);'"
+                },
+                {
+                  "line_no": 748,
+                  "contents": "'            LOG.warn(\"Cannot open channel to {} at election address {}\", sid, electionAddr, e);'"
+                },
+                {
+                  "line_no": 749,
+                  "contents": "'            closeSocket(sock);'"
+                },
+                {
+                  "line_no": 750,
+                  "contents": "'            return false;'"
+                }
               ]
             },
             "diff_command": "git diff f0fdd52973d373ffd9c86b81d99842dc2c7f660e 97db6936745bdf548f90c2383647eab62d017254 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"

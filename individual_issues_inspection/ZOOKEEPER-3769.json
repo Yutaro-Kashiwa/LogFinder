@@ -1,0 +1,762 @@
+{
+  "project": "ZooKeeper",
+  "issue_key": "ZOOKEEPER-3769",
+  "data": {
+    "issue": {
+      "key": "ZOOKEEPER-3769",
+      "summary": "fast leader election does not end if leader is taken down",
+      "status": "Closed",
+      "priority": "Major",
+      "created": "24/Mar/20 18:49",
+      "affects": [
+        "3.5.7"
+      ],
+      "log": [
+        {
+          "date": "24/Mar/20 19:07",
+          "username": "lasaro",
+          "filename": "node1.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/12997598/node1.log"
+        },
+        {
+          "date": "24/Mar/20 19:07",
+          "username": "lasaro",
+          "filename": "node2.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/12997597/node2.log"
+        },
+        {
+          "date": "24/Mar/20 19:07",
+          "username": "lasaro",
+          "filename": "node3.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/12997596/node3.log"
+        }
+      ]
+    },
+    "analysis_results": [
+      {
+        "affected_version": "3.5.7",
+        "affected_version_sha": "f0fdd52973d373ffd9c86b81d99842dc2c7f660e",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/f0fdd52973d373ffd9c86b81d99842dc2c7f660e",
+        "fixing_commit_sha": "a548253408384d9e943b151c942d795017dca70c",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a548253408384d9e943b151c942d795017dca70c",
+        "checkout_command": "git checkout a548253408384d9e943b151c942d795017dca70c",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f0fdd52973d373ffd9c86b81d99842dc2c7f660e/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "modified_lines": [
+                138,
+                189,
+                230,
+                238,
+                241,
+                271,
+                272,
+                302,
+                303,
+                304,
+                311,
+                334,
+                689
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a548253408384d9e943b151c942d795017dca70c",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a548253408384d9e943b151c942d795017dca70c/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "unidentified_lines": [
+                244,
+                266,
+                267,
+                268,
+                269,
+                270,
+                274,
+                288,
+                292,
+                293,
+                294,
+                309,
+                310,
+                311,
+                312,
+                314,
+                316,
+                317,
+                318,
+                319,
+                320,
+                321,
+                322,
+                323,
+                324,
+                325,
+                326,
+                327,
+                328,
+                329,
+                330,
+                331,
+                333,
+                359,
+                360,
+                368,
+                373,
+                374
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 244,
+                  "contents": "'                            LOG.error(\"Got a short response: {}\", response.buffer.capacity());'"
+                },
+                {
+                  "line_no": 266,
+                  "contents": "'                        if (!backCompatibility28) {'"
+                },
+                {
+                  "line_no": 267,
+                  "contents": "'                            rpeerepoch = response.buffer.getLong();'"
+                },
+                {
+                  "line_no": 268,
+                  "contents": "'                            if (!backCompatibility40) {'"
+                },
+                {
+                  "line_no": 269,
+                  "contents": "'                                /*'"
+                },
+                {
+                  "line_no": 270,
+                  "contents": "'                                 * Version added in 3.4.6'"
+                },
+                {
+                  "line_no": 274,
+                  "contents": "'                                version = response.buffer.getInt();'"
+                },
+                {
+                  "line_no": 288,
+                  "contents": "'                                LOG.info(\"Backward compatibility mode (36 bits), server id: {}\", response.sid);'"
+                },
+                {
+                  "line_no": 292,
+                  "contents": "'                        } else {'"
+                },
+                {
+                  "line_no": 293,
+                  "contents": "'                            LOG.info(\"Backward compatibility mode (28 bits), server id: {}\", response.sid);'"
+                },
+                {
+                  "line_no": 294,
+                  "contents": "'                            rpeerepoch = ZxidUtils.getEpochFromZxid(rzxid);'"
+                },
+                {
+                  "line_no": 309,
+                  "contents": "'                        // check if we have a version that includes config. If so extract config info from message.'"
+                },
+                {
+                  "line_no": 310,
+                  "contents": "'                        if (version > 0x1) {'"
+                },
+                {
+                  "line_no": 311,
+                  "contents": "'                            int configLength = response.buffer.getInt();'"
+                },
+                {
+                  "line_no": 312,
+                  "contents": "'                            byte[] b = new byte[configLength];'"
+                },
+                {
+                  "line_no": 314,
+                  "contents": "'                            response.buffer.get(b);'"
+                },
+                {
+                  "line_no": 316,
+                  "contents": "'                            synchronized (self) {'"
+                },
+                {
+                  "line_no": 317,
+                  "contents": "'                                try {'"
+                },
+                {
+                  "line_no": 318,
+                  "contents": "'                                    rqv = self.configFromString(new String(b));'"
+                },
+                {
+                  "line_no": 319,
+                  "contents": "'                                    QuorumVerifier curQV = self.getQuorumVerifier();'"
+                },
+                {
+                  "line_no": 320,
+                  "contents": "'                                    if (rqv.getVersion() > curQV.getVersion()) {'"
+                },
+                {
+                  "line_no": 321,
+                  "contents": "'                                        LOG.info(\"{} Received version: {} my version: {}\",'"
+                },
+                {
+                  "line_no": 322,
+                  "contents": "'                                                 self.getId(),'"
+                },
+                {
+                  "line_no": 323,
+                  "contents": "'                                                 Long.toHexString(rqv.getVersion()),'"
+                },
+                {
+                  "line_no": 324,
+                  "contents": "'                                                 Long.toHexString(self.getQuorumVerifier().getVersion()));'"
+                },
+                {
+                  "line_no": 325,
+                  "contents": "'                                        if (self.getPeerState() == ServerState.LOOKING) {'"
+                },
+                {
+                  "line_no": 326,
+                  "contents": "'                                            LOG.debug(\"Invoking processReconfig(), state: {}\", self.getServerState());'"
+                },
+                {
+                  "line_no": 327,
+                  "contents": "'                                            self.processReconfig(rqv, null, null, false);'"
+                },
+                {
+                  "line_no": 328,
+                  "contents": "'                                            if (!rqv.equals(curQV)) {'"
+                },
+                {
+                  "line_no": 329,
+                  "contents": "'                                                LOG.info(\"restarting leader election\");'"
+                },
+                {
+                  "line_no": 330,
+                  "contents": "'                                                self.shuttingDownLE = true;'"
+                },
+                {
+                  "line_no": 331,
+                  "contents": "'                                                self.getElectionAlg().shutdown();'"
+                },
+                {
+                  "line_no": 333,
+                  "contents": "'                                                break;'"
+                },
+                {
+                  "line_no": 359,
+                  "contents": "'                                        } else {'"
+                },
+                {
+                  "line_no": 360,
+                  "contents": "'                                            LOG.debug(\"Skip processReconfig(), state: {}\", self.getServerState());'"
+                },
+                {
+                  "line_no": 368,
+                  "contents": "'                                    LOG.error(\"Something went wrong while processing config received from {}\", response.sid);'"
+                },
+                {
+                  "line_no": 373,
+                  "contents": "'                        } else {'"
+                },
+                {
+                  "line_no": 374,
+                  "contents": "'                            LOG.info(\"Backward compatibility mode (before reconfig), server id: {}\", response.sid);'"
+                }
+              ]
+            },
+            "diff_command": "git diff f0fdd52973d373ffd9c86b81d99842dc2c7f660e a548253408384d9e943b151c942d795017dca70c -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "3.5.7",
+        "affected_version_sha": "f0fdd52973d373ffd9c86b81d99842dc2c7f660e",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/f0fdd52973d373ffd9c86b81d99842dc2c7f660e",
+        "fixing_commit_sha": "f6df585ba4f1f5a012461d9c15c55e541d64f97a",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/f6df585ba4f1f5a012461d9c15c55e541d64f97a",
+        "checkout_command": "git checkout f6df585ba4f1f5a012461d9c15c55e541d64f97a",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f0fdd52973d373ffd9c86b81d99842dc2c7f660e/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "modified_lines": [
+                230,
+                231,
+                238,
+                241,
+                271,
+                302,
+                303,
+                304,
+                305
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/f6df585ba4f1f5a012461d9c15c55e541d64f97a",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f6df585ba4f1f5a012461d9c15c55e541d64f97a/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "unidentified_lines": [
+                247,
+                255,
+                256,
+                257,
+                258,
+                259,
+                260,
+                261,
+                262,
+                279,
+                283,
+                284,
+                285,
+                286,
+                290,
+                291,
+                292,
+                293,
+                294,
+                295,
+                296,
+                297,
+                298,
+                299,
+                300,
+                301,
+                302,
+                303,
+                304,
+                305,
+                306,
+                307,
+                308,
+                309,
+                310,
+                311,
+                312,
+                313,
+                350,
+                351,
+                361,
+                362,
+                363,
+                364,
+                374
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 247,
+                  "contents": "'                        '"
+                },
+                {
+                  "line_no": 255,
+                  "contents": "'                        if (!backCompatibility28) {'"
+                },
+                {
+                  "line_no": 256,
+                  "contents": "'                            rpeerepoch = response.buffer.getLong();'"
+                },
+                {
+                  "line_no": 257,
+                  "contents": "'                            if (!backCompatibility40) {'"
+                },
+                {
+                  "line_no": 258,
+                  "contents": "'                                /*'"
+                },
+                {
+                  "line_no": 259,
+                  "contents": "'                                 * Version added in 3.4.6'"
+                },
+                {
+                  "line_no": 260,
+                  "contents": "'                                 */'"
+                },
+                {
+                  "line_no": 261,
+                  "contents": "'                                '"
+                },
+                {
+                  "line_no": 262,
+                  "contents": "'                                version = response.buffer.getInt();'"
+                },
+                {
+                  "line_no": 279,
+                  "contents": "'                                LOG.info(\"Backward compatibility mode (36 bits), server id: {}\", response.sid);'"
+                },
+                {
+                  "line_no": 283,
+                  "contents": "'                        } else {'"
+                },
+                {
+                  "line_no": 284,
+                  "contents": "'                            LOG.info(\"Backward compatibility mode (28 bits), server id: {}\", response.sid);'"
+                },
+                {
+                  "line_no": 285,
+                  "contents": "'                            rpeerepoch = ZxidUtils.getEpochFromZxid(rzxid);'"
+                },
+                {
+                  "line_no": 286,
+                  "contents": "'                        }'"
+                },
+                {
+                  "line_no": 290,
+                  "contents": "'                        // check if we have a version that includes config. If so extract config info from message.'"
+                },
+                {
+                  "line_no": 291,
+                  "contents": "'                        if (version > 0x1) {'"
+                },
+                {
+                  "line_no": 292,
+                  "contents": "'                            int configLength = response.buffer.getInt();'"
+                },
+                {
+                  "line_no": 293,
+                  "contents": "'                            byte b[] = new byte[configLength];'"
+                },
+                {
+                  "line_no": 294,
+                  "contents": "''"
+                },
+                {
+                  "line_no": 295,
+                  "contents": "'                            response.buffer.get(b);'"
+                },
+                {
+                  "line_no": 296,
+                  "contents": "'                                                       '"
+                },
+                {
+                  "line_no": 297,
+                  "contents": "'                            synchronized(self) {'"
+                },
+                {
+                  "line_no": 298,
+                  "contents": "'                                try {'"
+                },
+                {
+                  "line_no": 299,
+                  "contents": "'                                    rqv = self.configFromString(new String(b));'"
+                },
+                {
+                  "line_no": 300,
+                  "contents": "'                                    QuorumVerifier curQV = self.getQuorumVerifier();'"
+                },
+                {
+                  "line_no": 301,
+                  "contents": "'                                    if (rqv.getVersion() > curQV.getVersion()) {'"
+                },
+                {
+                  "line_no": 302,
+                  "contents": "'                                        LOG.info(\"{} Received version: {} my version: {}\", self.getId(),'"
+                },
+                {
+                  "line_no": 303,
+                  "contents": "'                                                Long.toHexString(rqv.getVersion()),'"
+                },
+                {
+                  "line_no": 304,
+                  "contents": "'                                                Long.toHexString(self.getQuorumVerifier().getVersion()));'"
+                },
+                {
+                  "line_no": 305,
+                  "contents": "'                                        if (self.getPeerState() == ServerState.LOOKING) {'"
+                },
+                {
+                  "line_no": 306,
+                  "contents": "'                                            LOG.debug(\"Invoking processReconfig(), state: {}\", self.getServerState());'"
+                },
+                {
+                  "line_no": 307,
+                  "contents": "'                                            self.processReconfig(rqv, null, null, false);'"
+                },
+                {
+                  "line_no": 308,
+                  "contents": "'                                            if (!rqv.equals(curQV)) {'"
+                },
+                {
+                  "line_no": 309,
+                  "contents": "'                                                LOG.info(\"restarting leader election\");'"
+                },
+                {
+                  "line_no": 310,
+                  "contents": "'                                                self.shuttingDownLE = true;'"
+                },
+                {
+                  "line_no": 311,
+                  "contents": "'                                                self.getElectionAlg().shutdown();'"
+                },
+                {
+                  "line_no": 312,
+                  "contents": "''"
+                },
+                {
+                  "line_no": 313,
+                  "contents": "'                                                break;'"
+                },
+                {
+                  "line_no": 350,
+                  "contents": "'                                        } else {'"
+                },
+                {
+                  "line_no": 351,
+                  "contents": "'                                            LOG.debug(\"Skip processReconfig(), state: {}\", self.getServerState());'"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'                               }'"
+                },
+                {
+                  "line_no": 362,
+                  "contents": "'                            }                          '"
+                },
+                {
+                  "line_no": 363,
+                  "contents": "'                        } else {'"
+                },
+                {
+                  "line_no": 364,
+                  "contents": "'                            LOG.info(\"Backward compatibility mode (before reconfig), server id: {}\", response.sid);'"
+                },
+                {
+                  "line_no": 374,
+                  "contents": "'                       '"
+                }
+              ]
+            },
+            "diff_command": "git diff f0fdd52973d373ffd9c86b81d99842dc2c7f660e f6df585ba4f1f5a012461d9c15c55e541d64f97a -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "3.5.7",
+        "affected_version_sha": "f0fdd52973d373ffd9c86b81d99842dc2c7f660e",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/f0fdd52973d373ffd9c86b81d99842dc2c7f660e",
+        "fixing_commit_sha": "68466c8767fa1b3ab0e355278921752392e2ea8b",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/68466c8767fa1b3ab0e355278921752392e2ea8b",
+        "checkout_command": "git checkout 68466c8767fa1b3ab0e355278921752392e2ea8b",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f0fdd52973d373ffd9c86b81d99842dc2c7f660e/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "modified_lines": [
+                138,
+                189,
+                230,
+                238,
+                241,
+                271,
+                272,
+                302,
+                303,
+                304,
+                311,
+                334,
+                689
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/68466c8767fa1b3ab0e355278921752392e2ea8b",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/68466c8767fa1b3ab0e355278921752392e2ea8b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java",
+              "unidentified_lines": [
+                244,
+                266,
+                267,
+                268,
+                269,
+                270,
+                274,
+                288,
+                292,
+                293,
+                294,
+                309,
+                310,
+                311,
+                312,
+                314,
+                316,
+                317,
+                318,
+                319,
+                320,
+                321,
+                322,
+                323,
+                324,
+                325,
+                326,
+                327,
+                328,
+                329,
+                330,
+                331,
+                333,
+                359,
+                360,
+                368,
+                373,
+                374
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 244,
+                  "contents": "'                            LOG.error(\"Got a short response: {}\", response.buffer.capacity());'"
+                },
+                {
+                  "line_no": 266,
+                  "contents": "'                        if (!backCompatibility28) {'"
+                },
+                {
+                  "line_no": 267,
+                  "contents": "'                            rpeerepoch = response.buffer.getLong();'"
+                },
+                {
+                  "line_no": 268,
+                  "contents": "'                            if (!backCompatibility40) {'"
+                },
+                {
+                  "line_no": 269,
+                  "contents": "'                                /*'"
+                },
+                {
+                  "line_no": 270,
+                  "contents": "'                                 * Version added in 3.4.6'"
+                },
+                {
+                  "line_no": 274,
+                  "contents": "'                                version = response.buffer.getInt();'"
+                },
+                {
+                  "line_no": 288,
+                  "contents": "'                                LOG.info(\"Backward compatibility mode (36 bits), server id: {}\", response.sid);'"
+                },
+                {
+                  "line_no": 292,
+                  "contents": "'                        } else {'"
+                },
+                {
+                  "line_no": 293,
+                  "contents": "'                            LOG.info(\"Backward compatibility mode (28 bits), server id: {}\", response.sid);'"
+                },
+                {
+                  "line_no": 294,
+                  "contents": "'                            rpeerepoch = ZxidUtils.getEpochFromZxid(rzxid);'"
+                },
+                {
+                  "line_no": 309,
+                  "contents": "'                        // check if we have a version that includes config. If so extract config info from message.'"
+                },
+                {
+                  "line_no": 310,
+                  "contents": "'                        if (version > 0x1) {'"
+                },
+                {
+                  "line_no": 311,
+                  "contents": "'                            int configLength = response.buffer.getInt();'"
+                },
+                {
+                  "line_no": 312,
+                  "contents": "'                            byte[] b = new byte[configLength];'"
+                },
+                {
+                  "line_no": 314,
+                  "contents": "'                            response.buffer.get(b);'"
+                },
+                {
+                  "line_no": 316,
+                  "contents": "'                            synchronized (self) {'"
+                },
+                {
+                  "line_no": 317,
+                  "contents": "'                                try {'"
+                },
+                {
+                  "line_no": 318,
+                  "contents": "'                                    rqv = self.configFromString(new String(b));'"
+                },
+                {
+                  "line_no": 319,
+                  "contents": "'                                    QuorumVerifier curQV = self.getQuorumVerifier();'"
+                },
+                {
+                  "line_no": 320,
+                  "contents": "'                                    if (rqv.getVersion() > curQV.getVersion()) {'"
+                },
+                {
+                  "line_no": 321,
+                  "contents": "'                                        LOG.info(\"{} Received version: {} my version: {}\",'"
+                },
+                {
+                  "line_no": 322,
+                  "contents": "'                                                 self.getId(),'"
+                },
+                {
+                  "line_no": 323,
+                  "contents": "'                                                 Long.toHexString(rqv.getVersion()),'"
+                },
+                {
+                  "line_no": 324,
+                  "contents": "'                                                 Long.toHexString(self.getQuorumVerifier().getVersion()));'"
+                },
+                {
+                  "line_no": 325,
+                  "contents": "'                                        if (self.getPeerState() == ServerState.LOOKING) {'"
+                },
+                {
+                  "line_no": 326,
+                  "contents": "'                                            LOG.debug(\"Invoking processReconfig(), state: {}\", self.getServerState());'"
+                },
+                {
+                  "line_no": 327,
+                  "contents": "'                                            self.processReconfig(rqv, null, null, false);'"
+                },
+                {
+                  "line_no": 328,
+                  "contents": "'                                            if (!rqv.equals(curQV)) {'"
+                },
+                {
+                  "line_no": 329,
+                  "contents": "'                                                LOG.info(\"restarting leader election\");'"
+                },
+                {
+                  "line_no": 330,
+                  "contents": "'                                                self.shuttingDownLE = true;'"
+                },
+                {
+                  "line_no": 331,
+                  "contents": "'                                                self.getElectionAlg().shutdown();'"
+                },
+                {
+                  "line_no": 333,
+                  "contents": "'                                                break;'"
+                },
+                {
+                  "line_no": 359,
+                  "contents": "'                                        } else {'"
+                },
+                {
+                  "line_no": 360,
+                  "contents": "'                                            LOG.debug(\"Skip processReconfig(), state: {}\", self.getServerState());'"
+                },
+                {
+                  "line_no": 368,
+                  "contents": "'                                    LOG.error(\"Something went wrong while processing config received from {}\", response.sid);'"
+                },
+                {
+                  "line_no": 373,
+                  "contents": "'                        } else {'"
+                },
+                {
+                  "line_no": 374,
+                  "contents": "'                            LOG.info(\"Backward compatibility mode (before reconfig), server id: {}\", response.sid);'"
+                }
+              ]
+            },
+            "diff_command": "git diff f0fdd52973d373ffd9c86b81d99842dc2c7f660e 68466c8767fa1b3ab0e355278921752392e2ea8b -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/FastLeaderElection.java"
+          }
+        ]
+      }
+    ]
+  }
+}

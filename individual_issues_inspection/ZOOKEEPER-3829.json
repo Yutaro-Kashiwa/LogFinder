@@ -1,0 +1,2607 @@
+{
+  "project": "ZooKeeper",
+  "issue_key": "ZOOKEEPER-3829",
+  "data": {
+    "issue": {
+      "key": "ZOOKEEPER-3829",
+      "summary": "Zookeeper refuses request after node expansion",
+      "status": "Closed",
+      "priority": "Major",
+      "created": "15/May/20 03:12",
+      "affects": [
+        "3.5.8",
+        "3.6.1"
+      ],
+      "log": [
+        {
+          "date": "15/May/20 07:52",
+          "username": "sundyli",
+          "filename": "d.log",
+          "url": "https://issues.apache.org/jira/secure/attachment/13003009/d.log"
+        }
+      ]
+    },
+    "analysis_results": [
+      {
+        "affected_version": "3.5.8",
+        "affected_version_sha": "f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "fixing_commit_sha": "e91455c1e3c50405666cd8afad71d99dceb7b340",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+        "checkout_command": "git checkout e91455c1e3c50405666cd8afad71d99dceb7b340",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "modified_lines": [
+                426
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "modified_lines": [
+                156,157,179,180,245
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 306,
+                  "contents": "'    public ZooKeeperServer(FileTxnSnapLog txnLogFactory, int tickTime, int minSessionTimeout, int maxSessionTimeout, int clientPortListenBacklog, ZKDatabase zkDb, String initialConfig) {'"
+                },
+                {
+                  "line_no": 358,
+                  "contents": "'        this(txnLogFactory, tickTime, minSessionTimeout, maxSessionTimeout, clientPortListenBacklog, zkDb, initialConfig);'"
+                },
+                {
+                  "line_no": 371,
+                  "contents": "'    public ZooKeeperServer(FileTxnSnapLog txnLogFactory, int tickTime, String initialConfig) throws IOException {'"
+                },
+                {
+                  "line_no": 372,
+                  "contents": "'        this(txnLogFactory, tickTime, -1, -1, -1, new ZKDatabase(txnLogFactory), initialConfig);'"
+                },
+                {
+                  "line_no": 443,
+                  "contents": "'        this(txnLogFactory, DEFAULT_TICK_TIME, -1, -1, -1, new ZKDatabase(txnLogFactory), \"\");'"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "modified_lines": [
+                1045,
+                1515,1516,1517,1518,1519,1520,1521,
+                1526,1527,1528,1529
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 1511,
+                  "contents": "'        /*'"
+                },
+                {
+                  "line_no": 1512,
+                  "contents": "'         * ZOOKEEPER-1324. the leader sends the new config it must complete'"
+                },
+                {
+                  "line_no": 1513,
+                  "contents": "'         *  to others inside a NEWLEADER message (see LearnerHandler where'"
+                },
+                {
+                  "line_no": 1514,
+                  "contents": "'         *  the NEWLEADER message is constructed), and once it has enough'"
+                },
+                {
+                  "line_no": 1515,
+                  "contents": "'         *  acks we must execute the following code so that it applies the'"
+                },
+                {
+                  "line_no": 1516,
+                  "contents": "'         *  config to itself.'"
+                },
+                {
+                  "line_no": 1518,
+                  "contents": "'        QuorumVerifier newQV = self.getLastSeenQuorumVerifier();'"
+                },
+                {
+                  "line_no": 1529,
+                  "contents": "'        Long designatedLeader = getDesignatedLeader(newLeaderProposal, zk.getZxid());'"
+                },
+                {
+                  "line_no": 1532,
+                  "contents": "'        self.processReconfig(newQV, designatedLeader, zk.getZxid(), true);'"
+                },
+                {
+                  "line_no": 1533,
+                  "contents": "'        if (designatedLeader != self.getId()) {'"
+                },
+                {
+                  "line_no": 1534,
+                  "contents": "'            allowedToCommit = false;'"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "modified_lines": [
+                402
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "modified_lines": [
+                1916
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "modified_lines": [
+                141
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "modified_lines": [49]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 52,
+                  "contents": "'        super(logFactory, tickTime, minSessionTimeout, maxSessionTimeout, listenBacklog, zkDb, self.getInitialConfig());'"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "modified_lines": [
+                48,49
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 55,
+                  "contents": "'            self.getInitialConfig());'"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "3.5.8",
+        "affected_version_sha": "f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "fixing_commit_sha": "a97526b6e762cad5b5350394a8d6568278a3d5ce",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+        "checkout_command": "git checkout a97526b6e762cad5b5350394a8d6568278a3d5ce",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "modified_lines": [
+                426
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "unidentified_lines": [
+
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 436,
+                  "contents": "'                ReconfigRequest reconfigRequest = (ReconfigRequest)record; '"
+                },
+                {
+                  "line_no": 444,
+                  "contents": "'                QuorumVerifier lastSeenQV = lzks.self.getLastSeenQuorumVerifier();                                                                                 '"
+                },
+                {
+                  "line_no": 448,
+                  "contents": "'                       throw new KeeperException.ReconfigInProgress(); '"
+                },
+                {
+                  "line_no": 452,
+                  "contents": "'  '"
+                },
+                {
+                  "line_no": 458,
+                  "contents": "'                '"
+                },
+                {
+                  "line_no": 459,
+                  "contents": "'                if (newMembers != null) { //non-incremental membership change                  '"
+                },
+                {
+                  "line_no": 463,
+                  "contents": "'                '"
+                },
+                {
+                  "line_no": 467,
+                  "contents": "'                   '"
+                },
+                {
+                  "line_no": 470,
+                  "contents": "'                       Properties props = new Properties();                        '"
+                },
+                {
+                  "line_no": 478,
+                  "contents": "'                } else { //incremental change - must be a majority quorum system   '"
+                },
+                {
+                  "line_no": 481,
+                  "contents": "'                   '"
+                },
+                {
+                  "line_no": 482,
+                  "contents": "'                   List<String> joiningServers = null; '"
+                },
+                {
+                  "line_no": 490,
+                  "contents": "'                   '"
+                },
+                {
+                  "line_no": 498,
+                  "contents": "'                   '"
+                },
+                {
+                  "line_no": 503,
+                  "contents": "'                           throw new KeeperException.BadArgumentsException(msg);               '"
+                },
+                {
+                  "line_no": 507,
+                  "contents": "'                   try {                           '"
+                },
+                {
+                  "line_no": 513,
+                  "contents": "'                           } '"
+                },
+                {
+                  "line_no": 518,
+                  "contents": "'                        \t   // joiner should have the following format: server.x = server_spec;client_spec               '"
+                },
+                {
+                  "line_no": 514,
+                  "contents": "'                                   throw new KeeperException.BadArgumentsException(\"Wrong format of server string - each server should have 3 ports specified\"); \t   '"
+                },
+                {
+                  "line_no": 527,
+                  "contents": "'                           }  '"
+                },
+                {
+                  "line_no": 543,
+                  "contents": "'                }                           '"
+                },
+                {
+                  "line_no": 544,
+                  "contents": "'                   '"
+                },
+                {
+                  "line_no": 549,
+                  "contents": "'                   LOG.warn(msg2);             '"
+                },
+                {
+                  "line_no": 553,
+                  "contents": "'                '"
+                },
+                {
+                  "line_no": 554,
+                  "contents": "'                nodeRecord = getRecordForPath(ZooDefs.CONFIG_NODE);               '"
+                },
+                {
+                  "line_no": 555,
+                  "contents": "'                checkACL(zks, nodeRecord.acl, ZooDefs.Perms.WRITE, request.authInfo);                  '"
+                },
+                {
+                  "line_no": 556,
+                  "contents": "'                request.setTxn(new SetDataTxn(ZooDefs.CONFIG_NODE, request.qv.toString().getBytes(), -1));    '"
+                },
+                {
+                  "line_no": 562,
+                  "contents": "'                nodeRecord.stat.setVersion(-1);                '"
+                },
+                {
+                  "line_no": 565,
+                  "contents": "'                break;                         '"
+                },
+                {
+                  "line_no": 756,
+                  "contents": "'                SetDataRequest setDataRequest = new SetDataRequest();                '"
+                },
+                {
+                  "line_no": 765,
+                  "contents": "'                SetACLRequest setAclRequest = new SetACLRequest();                '"
+                },
+                {
+                  "line_no": 770,
+                  "contents": "'                CheckVersionRequest checkRequest = new CheckVersionRequest();              '"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "modified_lines": [
+                157,
+                181,
+                245
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 269,
+                  "contents": "'         * When a new leader starts executing Leader#lead, it '"
+                },
+                {
+                  "line_no": 276,
+                  "contents": "'         * and avoid the penalty of loading it a second time. Not '"
+                },
+                {
+                  "line_no": 280,
+                  "contents": "'         * '"
+                },
+                {
+                  "line_no": 284,
+                  "contents": "'         * invoked by at least one other method: '"
+                },
+                {
+                  "line_no": 287,
+                  "contents": "'         *  '"
+                },
+                {
+                  "line_no": 292,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1172,
+                  "contents": "'                    if (System.getProperty(\"zookeeper.superUser\") != null && '"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java",
+              "modified_lines": [
+                126
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "modified_lines": [
+                1296,
+                1297,
+                1298,
+                1301,1302,1303,1304,1305,1306,1307,1308,1309,1310,1312,1313,1314
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "unidentified_lines": [
+
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 215,
+                  "contents": "'     *  '"
+                },
+                {
+                  "line_no": 231,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 367,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 373,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 451,
+                  "contents": "'    // when a reconfig occurs where the leader is removed or becomes an observer, '"
+                },
+                {
+                  "line_no": 454,
+                  "contents": "'    boolean allowedToCommit = true;     '"
+                },
+                {
+                  "line_no": 503,
+                  "contents": "'                // specified by the user; the lack of version in a config file is interpreted as version=0). '"
+                },
+                {
+                  "line_no": 507,
+                  "contents": "'                // of a server trying to join the ensemble, which may be a partial view of the system, not the full config). '"
+                },
+                {
+                  "line_no": 511,
+                  "contents": "'                // not when sending/receiving NEWLEADER. In other words, we can't change curQV here since its the committed quorum verifier, '"
+                },
+                {
+                  "line_no": 512,
+                  "contents": "'                // and there's still no agreement on the new version that we'd like to use. Instead, we use '"
+                },
+                {
+                  "line_no": 516,
+                  "contents": "'                // so its a good way to let followers know about the new version. (The original reason for sending '"
+                },
+                {
+                  "line_no": 519,
+                  "contents": "'                // that it finds before starting to propose operations. Here we're reusing the same code path for '"
+                },
+                {
+                  "line_no": 522,
+                  "contents": "'                '"
+                },
+                {
+                  "line_no": 532,
+                  "contents": "'                   self.setLastSeenQuorumVerifier(newQV, true);    '"
+                },
+                {
+                  "line_no": 538,
+                  "contents": "'            '"
+                },
+                {
+                  "line_no": 544,
+                  "contents": "'            '"
+                },
+                {
+                  "line_no": 549,
+                  "contents": "'                       '"
+                },
+                {
+                  "line_no": 552,
+                  "contents": "'             self.setCurrentEpoch(epoch);    '"
+                },
+                {
+                  "line_no": 553,
+                  "contents": "'            '"
+                },
+                {
+                  "line_no": 553,
+                  "contents": "'                 }    '"
+                },
+                {
+                  "line_no": 561,
+                  "contents": "'                 }                  '"
+                },
+                {
+                  "line_no": 569,
+                  "contents": "'             '"
+                },
+                {
+                  "line_no": 715,
+                  "contents": "'     *  Otherwise, choose one of the new voters that acked the reconfiguartion, such that it is as   '"
+                },
+                {
+                  "line_no": 718,
+                  "contents": "'     *  '"
+                },
+                {
+                  "line_no": 724,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 728,
+                  "contents": "'       Proposal.QuorumVerifierAcksetPair newQVAcksetPair = reconfigProposal.qvAcksetPairs.get(reconfigProposal.qvAcksetPairs.size()-1);        '"
+                },
+                {
+                  "line_no": 729,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 730,
+                  "contents": "'       //check if I'm in the new configuration with the same quorum address - '"
+                },
+                {
+                  "line_no": 731,
+                  "contents": "'       // if so, I'll remain the leader    '"
+                },
+                {
+                  "line_no": 732,
+                  "contents": "'       if (newQVAcksetPair.getQuorumVerifier().getVotingMembers().containsKey(self.getId()) && '"
+                },
+                {
+                  "line_no": 733,
+                  "contents": "'               newQVAcksetPair.getQuorumVerifier().getVotingMembers().get(self.getId()).addr.equals(self.getQuorumAddress())){  '"
+                },
+                {
+                  "line_no": 742,
+                  "contents": "'       // start with an initial set of candidates that are voters from new config that '"
+                },
+                {
+                  "line_no": 743,
+                  "contents": "'       // acknowledged the reconfig op (there must be a quorum). Choose one of them as '"
+                },
+                {
+                  "line_no": 750,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 754,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 758,
+                  "contents": "'               '"
+                },
+                {
+                  "line_no": 759,
+                  "contents": "'       while (p!=null && !candidates.isEmpty()) {                              '"
+                },
+                {
+                  "line_no": 760,
+                  "contents": "'           for (Proposal.QuorumVerifierAcksetPair qvAckset: p.qvAcksetPairs){ '"
+                },
+                {
+                  "line_no": 755,
+                  "contents": "'           }      '"
+                },
+                {
+                  "line_no": 760,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 768,
+                  "contents": "'    synchronized public boolean tryToCommit(Proposal p, long zxid, SocketAddress followerAddr) {       '"
+                },
+                {
+                  "line_no": 775,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 781,
+                  "contents": "'           return false;                 '"
+                },
+                {
+                  "line_no": 784,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 787,
+                  "contents": "'        if (zxid != lastCommitted+1) {    '"
+                },
+                {
+                  "line_no": 793,
+                  "contents": "'        }     '"
+                },
+                {
+                  "line_no": 794,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 798,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 806,
+                  "contents": "'        } else if (p.request.getHdr().getType() == OpCode.reconfig) {                                   '"
+                },
+                {
+                  "line_no": 807,
+                  "contents": "'            LOG.debug(\"Committing a reconfiguration! \" + outstandingProposals.size()); '"
+                },
+                {
+                  "line_no": 808,
+                  "contents": "'                 '"
+                },
+                {
+                  "line_no": 809,
+                  "contents": "'            //if this server is voter in new config with the same quorum address, '"
+                },
+                {
+                  "line_no": 816,
+                  "contents": "'            //leader election time, unless the designated leader fails                             '"
+                },
+                {
+                  "line_no": 822,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 831,
+                  "contents": "'                   '"
+                },
+                {
+                  "line_no": 832,
+                  "contents": "'            // we're sending the designated leader, and if the leader is changing the followers are '"
+                },
+                {
+                  "line_no": 833,
+                  "contents": "'            // responsible for closing the connection - this way we are sure that at least a majority of them '"
+                },
+                {
+                  "line_no": 831,
+                  "contents": "'            }               '"
+                },
+                {
+                  "line_no": 832,
+                  "contents": "'        } '"
+                },
+                {
+                  "line_no": 833,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 834,
+                  "contents": "'        return  true;   '"
+                },
+                {
+                  "line_no": 840,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 845,
+                  "contents": "'    synchronized public void processAck(long sid, long zxid, SocketAddress followerAddr) {        '"
+                },
+                {
+                  "line_no": 846,
+                  "contents": "'        if (!allowedToCommit) return; // last op committed was a leader change - from now on '"
+                },
+                {
+                  "line_no": 847,
+                  "contents": "'                                     // the new leader should commit        '"
+                },
+                {
+                  "line_no": 857,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 866,
+                  "contents": "'            '"
+                },
+                {
+                  "line_no": 867,
+                  "contents": "'            '"
+                },
+                {
+                  "line_no": 888,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 889,
+                  "contents": "'        p.addAck(sid);        '"
+                },
+                {
+                  "line_no": 896,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 911,
+                  "contents": "'               if (p !=null) hasCommitted = tryToCommit(p, curZxid, null);             '"
+                },
+                {
+                  "line_no": 916,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1024,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 1027,
+                  "contents": "'        ByteBuffer buffer = ByteBuffer.wrap(data);                            '"
+                },
+                {
+                  "line_no": 1030,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 1042,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1050,
+                  "contents": "'        ByteBuffer buffer = ByteBuffer.wrap(data);                            '"
+                },
+                {
+                  "line_no": 1054,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 1100,
+                  "contents": "'        p.request = request;                '"
+                },
+                {
+                  "line_no": 1101,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 1106,
+                  "contents": "'                   '"
+                },
+                {
+                  "line_no": 1109,
+                  "contents": "'               self.setLastSeenQuorumVerifier(request.qv, true);                       '"
+                },
+                {
+                  "line_no": 1112,
+                  "contents": "'           '"
+                },
+                {
+                  "line_no": 1117,
+                  "contents": "'                   '"
+                },
+                {
+                  "line_no": 1123,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1161,
+                  "contents": "'     * @throws InterruptedException '"
+                },
+                {
+                  "line_no": 1245,
+                  "contents": "'                    throw new IOException(\"Follower is ahead of the leader, leader summary: \" '"
+                },
+                {
+                  "line_no": 1273,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1276,
+                  "contents": "'     * Return a list of sid in set as string  '"
+                },
+                {
+                  "line_no": 1302,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 1303,
+                  "contents": "'        /*'"
+                },
+                {
+                  "line_no": 1304,
+                  "contents": "'         * ZOOKEEPER-1324. the leader sends the new config it must complete'"
+                },
+                {
+                  "line_no": 1305,
+                  "contents": "'         *  to others inside a NEWLEADER message (see LearnerHandler where'"
+                },
+                {
+                  "line_no": 1306,
+                  "contents": "'         *  the NEWLEADER message is constructed), and once it has enough'"
+                },
+                {
+                  "line_no": 1307,
+                  "contents": "'         *  acks we must execute the following code so that it applies the'"
+                },
+                {
+                  "line_no": 1308,
+                  "contents": "'         *  config to itself.'"
+                },
+                {
+                  "line_no": 1309,
+                  "contents": "'         */'"
+                },
+                {
+                  "line_no": 1310,
+                  "contents": "'        QuorumVerifier newQV = self.getLastSeenQuorumVerifier();'"
+                },
+                {
+                  "line_no": 1311,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 1312,
+                  "contents": "'        Long designatedLeader = getDesignatedLeader(newLeaderProposal, zk.getZxid());                                         '"
+                },
+                {
+                  "line_no": 1314,
+                  "contents": "'        self.processReconfig(newQV, designatedLeader, zk.getZxid(), true);'"
+                },
+                {
+                  "line_no": 1315,
+                  "contents": "'        if (designatedLeader != self.getId()) {'"
+                },
+                {
+                  "line_no": 1316,
+                  "contents": "'            allowedToCommit = false;'"
+                },
+                {
+                  "line_no": 1337,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 1344,
+                  "contents": "'         * '"
+                },
+                {
+                  "line_no": 1414,
+                  "contents": "'            return \"COMMITANDACTIVATE\";           '"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "modified_lines": [
+                402
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "modified_lines": [
+                1916
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "unidentified_lines": [
+
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 149,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 152,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 157,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 160,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 174,
+                  "contents": "' '"
+                },
+                {
+                  "line_no": 274,
+                  "contents": "'            '"
+                },
+                {
+                  "line_no": 323,
+                  "contents": "'            }           '"
+                },
+                {
+                  "line_no": 326,
+                  "contents": "'            else if (type == LearnerType.PARTICIPANT) sw.append(\":participant\");            '"
+                },
+                {
+                  "line_no": 334,
+                  "contents": "'            return sw.toString();       '"
+                },
+                {
+                  "line_no": 340,
+                  "contents": "'          return 42; // any arbitrary constant will do '"
+                },
+                {
+                  "line_no": 343,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 351,
+                  "contents": "'        '"
+                },
+                {
+                  "line_no": 355,
+                  "contents": "'            QuorumServer qs = (QuorumServer)o;          '"
+                },
+                {
+                  "line_no": 356,
+                  "contents": "'            if ((qs.id != id) || (qs.type != type)) return false;   '"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'            if (!checkAddressesEqual(clientAddr, qs.clientAddr)) return false;                    '"
+                },
+                {
+                  "line_no": 459,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 556,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 711,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 784,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 793,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 801,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1134,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1183,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1233,
+                  "contents": "'                        }                        '"
+                },
+                {
+                  "line_no": 1245,
+                  "contents": "'                        setObserver(null);  '"
+                },
+                {
+                  "line_no": 1303,
+                  "contents": "'       '"
+                },
+                {
+                  "line_no": 1316,
+                  "contents": "'       }       '"
+                },
+                {
+                  "line_no": 1317,
+                  "contents": "'       reconfigFlag = false;   '"
+                },
+                {
+                  "line_no": 1321,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1383,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1530,
+                  "contents": "'        Properties props = new Properties();        '"
+                },
+                {
+                  "line_no": 1535,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1552,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1560,
+                  "contents": "'        }           '"
+                },
+                {
+                  "line_no": 1569,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1585,
+                  "contents": "'    public void setLastSeenQuorumVerifier(QuorumVerifier qv, boolean writeToDisk){'"
+                },
+                {
+                  "line_no": 1625,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1699,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1700,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1707,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1711,
+                  "contents": "'     * '"
+                },
+                {
+                  "line_no": 1717,
+                  "contents": "'            LOG.info(SYNC_ENABLED + \"=\" + Boolean.getBoolean(SYNC_ENABLED));   '"
+                },
+                {
+                  "line_no": 1720,
+                  "contents": "'        } else {        '"
+                },
+                {
+                  "line_no": 1725,
+                  "contents": "'    '"
+                },
+                {
+                  "line_no": 1729,
+                  "contents": "'     * '"
+                },
+                {
+                  "line_no": 1837,
+                  "contents": "'    public synchronized void initConfigInZKDatabase() {   '"
+                },
+                {
+                  "line_no": 1914,
+                  "contents": "'   '"
+                },
+                {
+                  "line_no": 1918,
+                  "contents": "'           LOG.debug(\"Reconfig feature is disabled, skip reconfig processing.\");'"
+                },
+                {
+                  "line_no": 1919,
+                  "contents": "'           return false;'"
+                },
+                {
+                  "line_no": 1920,
+                  "contents": "'       }'"
+                },
+                {
+                  "line_no": 1958,
+                  "contents": "'               leaderChange = (myleaderInCurQV == null || myleaderInCurQV.addr == null || '"
+                },
+                {
+                  "line_no": 1965,
+                  "contents": "'           '"
+                },
+                {
+                  "line_no": 2007,
+                  "contents": "'   private boolean updateLearnerType(QuorumVerifier newQV) {        '"
+                },
+                {
+                  "line_no": 2016,
+                  "contents": "'               return false;           '"
+                },
+                {
+                  "line_no": 2037,
+                  "contents": "'   '"
+                },
+                {
+                  "line_no": 2038,
+                  "contents": "'   private boolean updateVote(long designatedLeader, long zxid){       '"
+                },
+                {
+                  "line_no": 2048,
+                  "contents": "' '"
+                },
+                {
+                  "line_no": 2054,
+                  "contents": "'     * Here is the inconsistency scenario we try to solve by updating the peer '"
+                },
+                {
+                  "line_no": 2060,
+                  "contents": "'     * 1. z1, z2 were following z3 with peerEpoch to be 0xb8, the new epoch is '"
+                },
+                {
+                  "line_no": 2065,
+                  "contents": "'     * 3. z2 received notification from z1 and z3, which is following z3 with '"
+                },
+                {
+                  "line_no": 2068,
+                  "contents": "'     * 4. before z2 successfully connected to z3, z3 get restarted with new '"
+                },
+                {
+                  "line_no": 2071,
+                  "contents": "'     * 5. z2 will retry around a few round (default 5s) before giving up, '"
+                },
+                {
+                  "line_no": 2076,
+                  "contents": "'     * 8. z2 successfully connected to z3 before giving up, but with peer '"
+                },
+                {
+                  "line_no": 2079,
+                  "contents": "'     * 9. z1 get restarted, looking for leader with peer epoch 0xba, but cannot '"
+                },
+                {
+                  "line_no": 2080,
+                  "contents": "'     *    join, because z2 is reporting peer epoch 0xb8, while z3 is reporting '"
+                },
+                {
+                  "line_no": 2085,
+                  "contents": "'     * By updating the election vote after actually following leader, we can '"
+                },
+                {
+                  "line_no": 2089,
+                  "contents": "'     * Btw, the zxid and electionEpoch could be inconsistent because of the same '"
+                },
+                {
+                  "line_no": 2090,
+                  "contents": "'     * reason, it's better to update these as well after syncing with leader, but '"
+                },
+                {
+                  "line_no": 2091,
+                  "contents": "'     * that required protocol change which is non trivial. This problem is worked '"
+                },
+                {
+                  "line_no": 2092,
+                  "contents": "'     * around by skipping comparing the zxid and electionEpoch when counting for '"
+                },
+                {
+                  "line_no": 2098,
+                  "contents": "'     * '"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "modified_lines": [
+                141
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 204,
+                  "contents": "'          '"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "modified_lines": [
+                49
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "modified_lines": [
+                49
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "3.5.8",
+        "affected_version_sha": "f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/f439ca583e70862c3068a1f2a7d4d068eec33315",
+        "fixing_commit_sha": "48f037fde4a1887ca4aed95919366a6bbae94260",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+        "checkout_command": "git checkout 48f037fde4a1887ca4aed95919366a6bbae94260",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "modified_lines": [
+                426
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "modified_lines": [
+                156,157,179,180,181,245
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 303,
+                  "contents": "'    public ZooKeeperServer(FileTxnSnapLog txnLogFactory, int tickTime, int minSessionTimeout, int maxSessionTimeout, int clientPortListenBacklog, ZKDatabase zkDb, String initialConfig) {'"
+                },
+                {
+                  "line_no": 355,
+                  "contents": "'        this(txnLogFactory, tickTime, minSessionTimeout, maxSessionTimeout, clientPortListenBacklog, zkDb, initialConfig);'"
+                },
+                {
+                  "line_no": 368,
+                  "contents": "'    public ZooKeeperServer(FileTxnSnapLog txnLogFactory, int tickTime, String initialConfig) throws IOException {'"
+                },
+                {
+                  "line_no": 369,
+                  "contents": "'        this(txnLogFactory, tickTime, -1, -1, -1, new ZKDatabase(txnLogFactory), initialConfig);'"
+                },
+                {
+                  "line_no": 440,
+                  "contents": "'        this(txnLogFactory, DEFAULT_TICK_TIME, -1, -1, -1, new ZKDatabase(txnLogFactory), \"\");'"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "modified_lines": [
+                1045,1312,1313,1314
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 1505,
+                  "contents": "'        /*'"
+                },
+                {
+                  "line_no": 1506,
+                  "contents": "'         * ZOOKEEPER-1324. the leader sends the new config it must complete'"
+                },
+                {
+                  "line_no": 1507,
+                  "contents": "'         *  to others inside a NEWLEADER message (see LearnerHandler where'"
+                },
+                {
+                  "line_no": 1508,
+                  "contents": "'         *  the NEWLEADER message is constructed), and once it has enough'"
+                },
+                {
+                  "line_no": 1509,
+                  "contents": "'         *  acks we must execute the following code so that it applies the'"
+                },
+                {
+                  "line_no": 1510,
+                  "contents": "'         *  config to itself.'"
+                },
+                {
+                  "line_no": 1512,
+                  "contents": "'        QuorumVerifier newQV = self.getLastSeenQuorumVerifier();'"
+                },
+                {
+                  "line_no": 1523,
+                  "contents": "'        Long designatedLeader = getDesignatedLeader(newLeaderProposal, zk.getZxid());'"
+                },
+                {
+                  "line_no": 1526,
+                  "contents": "'        self.processReconfig(newQV, designatedLeader, zk.getZxid(), true);'"
+                },
+                {
+                  "line_no": 1527,
+                  "contents": "'        if (designatedLeader != self.getId()) {'"
+                },
+                {
+                  "line_no": 1528,
+                  "contents": "'            allowedToCommit = false;'"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "modified_lines": [
+                402
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "modified_lines": [
+                1916
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "modified_lines": [
+                141
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "modified_lines": [
+                49
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 52,
+                  "contents": "'        super(logFactory, tickTime, minSessionTimeout, maxSessionTimeout, listenBacklog, zkDb, self.getInitialConfig());'"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/f439ca583e70862c3068a1f2a7d4d068eec33315/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "modified_lines": [48,49]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 55,
+                  "contents": "'            self.getInitialConfig());'"
+                }
+              ]
+            },
+            "diff_command": "git diff f439ca583e70862c3068a1f2a7d4d068eec33315 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "3.6.1",
+        "affected_version_sha": "104dcb3e3fb464b30c5186d229e00af9f332524b",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/104dcb3e3fb464b30c5186d229e00af9f332524b",
+        "fixing_commit_sha": "e91455c1e3c50405666cd8afad71d99dceb7b340",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+        "checkout_command": "git checkout e91455c1e3c50405666cd8afad71d99dceb7b340",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "modified_lines": [
+                408
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "modified_lines": [
+                303,
+                355,
+                368,
+                369,
+                440
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "modified_lines": [
+                523
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "modified_lines": [
+                2155
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "modified_lines": [
+                151
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "modified_lines": [
+                52
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "modified_lines": [
+                55
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/e91455c1e3c50405666cd8afad71d99dceb7b340",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/e91455c1e3c50405666cd8afad71d99dceb7b340/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b e91455c1e3c50405666cd8afad71d99dceb7b340 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "3.6.1",
+        "affected_version_sha": "104dcb3e3fb464b30c5186d229e00af9f332524b",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/104dcb3e3fb464b30c5186d229e00af9f332524b",
+        "fixing_commit_sha": "a97526b6e762cad5b5350394a8d6568278a3d5ce",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+        "checkout_command": "git checkout a97526b6e762cad5b5350394a8d6568278a3d5ce",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "modified_lines": [
+                93,
+                113,
+                152,
+                174,
+                350,
+                379,
+                408,
+                548,
+                555,
+                608,
+                614,
+                640,
+                705,
+                1077
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "unidentified_lines": [
+
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 436,
+                  "contents": "'                ReconfigRequest reconfigRequest = (ReconfigRequest)record; '"
+                },
+                {
+                  "line_no": 444,
+                  "contents": "'                QuorumVerifier lastSeenQV = lzks.self.getLastSeenQuorumVerifier();                                                                                 '"
+                },
+                {
+                  "line_no": 448,
+                  "contents": "'                       throw new KeeperException.ReconfigInProgress(); '"
+                },
+                {
+                  "line_no": 459,
+                  "contents": "'                if (newMembers != null) { //non-incremental membership change                  '"
+                },
+                {
+                  "line_no": 470,
+                  "contents": "'                       Properties props = new Properties();                        '"
+                },
+                {
+                  "line_no": 478,
+                  "contents": "'                } else { //incremental change - must be a majority quorum system   '"
+                },
+                {
+                  "line_no": 482,
+                  "contents": "'                   List<String> joiningServers = null; '"
+                },
+                {
+                  "line_no": 503,
+                  "contents": "'                           throw new KeeperException.BadArgumentsException(msg);               '"
+                },
+                {
+                  "line_no": 507,
+                  "contents": "'                   try {                           '"
+                },
+                {
+                  "line_no": 518,
+                  "contents": "'                        \t   // joiner should have the following format: server.x = server_spec;client_spec               '"
+                },
+                {
+                  "line_no": 514,
+                  "contents": "'                                   throw new KeeperException.BadArgumentsException(\"Wrong format of server string - each server should have 3 ports specified\"); \t   '"
+                },
+                {
+                  "line_no": 549,
+                  "contents": "'                   LOG.warn(msg2);             '"
+                },
+                {
+                  "line_no": 554,
+                  "contents": "'                nodeRecord = getRecordForPath(ZooDefs.CONFIG_NODE);               '"
+                },
+                {
+                  "line_no": 555,
+                  "contents": "'                checkACL(zks, nodeRecord.acl, ZooDefs.Perms.WRITE, request.authInfo);                  '"
+                },
+                {
+                  "line_no": 556,
+                  "contents": "'                request.setTxn(new SetDataTxn(ZooDefs.CONFIG_NODE, request.qv.toString().getBytes(), -1));    '"
+                },
+                {
+                  "line_no": 562,
+                  "contents": "'                nodeRecord.stat.setVersion(-1);                '"
+                },
+                {
+                  "line_no": 756,
+                  "contents": "'                SetDataRequest setDataRequest = new SetDataRequest();                '"
+                },
+                {
+                  "line_no": 765,
+                  "contents": "'                SetACLRequest setAclRequest = new SetACLRequest();                '"
+                },
+                {
+                  "line_no": 770,
+                  "contents": "'                CheckVersionRequest checkRequest = new CheckVersionRequest();              '"
+                }
+              ]
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "modified_lines": [
+                258,
+                267,
+                281,
+                348,
+                303,369,440,464
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "unidentified_lines": [
+
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 157,
+                  "contents": "'            int minSessionTimeout, int maxSessionTimeout, ZKDatabase zkDb) {'"
+                },
+                {
+                  "line_no": 181,
+                  "contents": "'        this(txnLogFactory, tickTime, -1, -1, new ZKDatabase(txnLogFactory));'"
+                },
+                {
+                  "line_no": 245,
+                  "contents": "'        this(txnLogFactory, DEFAULT_TICK_TIME, -1, -1, new ZKDatabase(txnLogFactory));'"
+                },
+                {
+                  "line_no": 269,
+                  "contents": "'         * When a new leader starts executing Leader#lead, it '"
+                },
+                {
+                  "line_no": 276,
+                  "contents": "'         * and avoid the penalty of loading it a second time. Not '"
+                },
+                {
+                  "line_no": 284,
+                  "contents": "'         * invoked by at least one other method: '"
+                },
+                {
+                  "line_no": 1172,
+                  "contents": "'                    if (System.getProperty(\"zookeeper.superUser\") != null && '"
+                }
+              ]
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java",
+              "modified_lines": [
+                142
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 126,
+                  "contents": "'                    config.tickTime, config.minSessionTimeout, config.maxSessionTimeout, null);'"
+                }
+              ]
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServerMain.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "modified_lines": [
+                1,
+                211,
+                292,
+                298,
+                302,
+                305,
+                437,
+                451,
+                454,
+                472,
+                477,
+                481,
+                486,
+                491,
+                505,
+                544,
+                557,
+                562,
+                566,
+                568,
+                569,
+                662,
+                831,
+                832,
+                833,
+                834,
+                835,
+                902,
+                1021,
+                1181,
+                1329,
+                1338,
+                1341,
+                1345,
+                1348,
+                1353,
+                1359,
+                1362,
+                1364,
+                1370,
+                1379,
+                1383,
+                1395,
+                1436,
+                1441,
+                1642,
+                1647,
+                1652,
+                1657,
+                1662,
+                1667,
+                1672,
+                1677,
+                1682,
+                1688,
+                1693,
+                1501,1502,1503,1506,1507,1508,1509,1510,1512,1514,1516,1517,1518
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java",
+              "unidentified_lines": [
+
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 451,
+                  "contents": "'    // when a reconfig occurs where the leader is removed or becomes an observer, '"
+                },
+                {
+                  "line_no": 454,
+                  "contents": "'    boolean allowedToCommit = true;     '"
+                },
+                {
+                  "line_no": 503,
+                  "contents": "'                // specified by the user; the lack of version in a config file is interpreted as version=0). '"
+                },
+                {
+                  "line_no": 507,
+                  "contents": "'                // of a server trying to join the ensemble, which may be a partial view of the system, not the full config). '"
+                },
+                {
+                  "line_no": 511,
+                  "contents": "'                // not when sending/receiving NEWLEADER. In other words, we can't change curQV here since its the committed quorum verifier, '"
+                },
+                {
+                  "line_no": 512,
+                  "contents": "'                // and there's still no agreement on the new version that we'd like to use. Instead, we use '"
+                },
+                {
+                  "line_no": 516,
+                  "contents": "'                // so its a good way to let followers know about the new version. (The original reason for sending '"
+                },
+                {
+                  "line_no": 519,
+                  "contents": "'                // that it finds before starting to propose operations. Here we're reusing the same code path for '"
+                },
+                {
+                  "line_no": 532,
+                  "contents": "'                   self.setLastSeenQuorumVerifier(newQV, true);    '"
+                },
+                {
+                  "line_no": 552,
+                  "contents": "'             self.setCurrentEpoch(epoch);    '"
+                },
+                {
+                  "line_no": 715,
+                  "contents": "'     *  Otherwise, choose one of the new voters that acked the reconfiguartion, such that it is as   '"
+                },
+                {
+                  "line_no": 728,
+                  "contents": "'       Proposal.QuorumVerifierAcksetPair newQVAcksetPair = reconfigProposal.qvAcksetPairs.get(reconfigProposal.qvAcksetPairs.size()-1);        '"
+                },
+                {
+                  "line_no": 730,
+                  "contents": "'       //check if I'm in the new configuration with the same quorum address - '"
+                },
+                {
+                  "line_no": 731,
+                  "contents": "'       // if so, I'll remain the leader    '"
+                },
+                {
+                  "line_no": 732,
+                  "contents": "'       if (newQVAcksetPair.getQuorumVerifier().getVotingMembers().containsKey(self.getId()) && '"
+                },
+                {
+                  "line_no": 733,
+                  "contents": "'               newQVAcksetPair.getQuorumVerifier().getVotingMembers().get(self.getId()).addr.equals(self.getQuorumAddress())){  '"
+                },
+                {
+                  "line_no": 742,
+                  "contents": "'       // start with an initial set of candidates that are voters from new config that '"
+                },
+                {
+                  "line_no": 743,
+                  "contents": "'       // acknowledged the reconfig op (there must be a quorum). Choose one of them as '"
+                },
+                {
+                  "line_no": 759,
+                  "contents": "'       while (p!=null && !candidates.isEmpty()) {                              '"
+                },
+                {
+                  "line_no": 760,
+                  "contents": "'           for (Proposal.QuorumVerifierAcksetPair qvAckset: p.qvAcksetPairs){ '"
+                },
+                {
+                  "line_no": 768,
+                  "contents": "'    synchronized public boolean tryToCommit(Proposal p, long zxid, SocketAddress followerAddr) {       '"
+                },
+                {
+                  "line_no": 787,
+                  "contents": "'        if (zxid != lastCommitted+1) {    '"
+                },
+                {
+                  "line_no": 806,
+                  "contents": "'        } else if (p.request.getHdr().getType() == OpCode.reconfig) {                                   '"
+                },
+                {
+                  "line_no": 807,
+                  "contents": "'            LOG.debug(\"Committing a reconfiguration! \" + outstandingProposals.size()); '"
+                },
+                {
+                  "line_no": 809,
+                  "contents": "'            //if this server is voter in new config with the same quorum address, '"
+                },
+                {
+                  "line_no": 816,
+                  "contents": "'            //leader election time, unless the designated leader fails                             '"
+                },
+                {
+                  "line_no": 832,
+                  "contents": "'            // we're sending the designated leader, and if the leader is changing the followers are '"
+                },
+                {
+                  "line_no": 833,
+                  "contents": "'            // responsible for closing the connection - this way we are sure that at least a majority of them '"
+                },
+                {
+                  "line_no": 834,
+                  "contents": "'        return  true;   '"
+                },
+                {
+                  "line_no": 845,
+                  "contents": "'    synchronized public void processAck(long sid, long zxid, SocketAddress followerAddr) {        '"
+                },
+                {
+                  "line_no": 846,
+                  "contents": "'        if (!allowedToCommit) return; // last op committed was a leader change - from now on '"
+                },
+                {
+                  "line_no": 847,
+                  "contents": "'                                     // the new leader should commit        '"
+                },
+                {
+                  "line_no": 889,
+                  "contents": "'        p.addAck(sid);        '"
+                },
+                {
+                  "line_no": 911,
+                  "contents": "'               if (p !=null) hasCommitted = tryToCommit(p, curZxid, null);             '"
+                },
+                {
+                  "line_no": 1027,
+                  "contents": "'        ByteBuffer buffer = ByteBuffer.wrap(data);                            '"
+                },
+                {
+                  "line_no": 1050,
+                  "contents": "'        ByteBuffer buffer = ByteBuffer.wrap(data);                            '"
+                },
+                {
+                  "line_no": 1100,
+                  "contents": "'        p.request = request;                '"
+                },
+                {
+                  "line_no": 1109,
+                  "contents": "'               self.setLastSeenQuorumVerifier(request.qv, true);                       '"
+                },
+                {
+                  "line_no": 1161,
+                  "contents": "'     * @throws InterruptedException '"
+                },
+                {
+                  "line_no": 1245,
+                  "contents": "'                    throw new IOException(\"Follower is ahead of the leader, leader summary: \" '"
+                },
+                {
+                  "line_no": 1276,
+                  "contents": "'     * Return a list of sid in set as string  '"
+                },
+                {
+                  "line_no": 1296,
+                  "contents": "'        LOG.info(\"Have quorum of supporters, sids: [ \"'"
+                },
+                {
+                  "line_no": 1298,
+                  "contents": "'                + \" ]; starting up and setting last processed zxid: 0x{}\",'"
+                },
+                {
+                  "line_no": 1304,
+                  "contents": "'         * ZOOKEEPER-1324. the leader sends the new config it must complete'"
+                },
+                {
+                  "line_no": 1305,
+                  "contents": "'         *  to others inside a NEWLEADER message (see LearnerHandler where'"
+                },
+                {
+                  "line_no": 1306,
+                  "contents": "'         *  the NEWLEADER message is constructed), and once it has enough'"
+                },
+                {
+                  "line_no": 1307,
+                  "contents": "'         *  acks we must execute the following code so that it applies the'"
+                },
+                {
+                  "line_no": 1308,
+                  "contents": "'         *  config to itself.'"
+                },
+                {
+                  "line_no": 1310,
+                  "contents": "'        QuorumVerifier newQV = self.getLastSeenQuorumVerifier();'"
+                },
+                {
+                  "line_no": 1312,
+                  "contents": "'        Long designatedLeader = getDesignatedLeader(newLeaderProposal, zk.getZxid());                                         '"
+                },
+                {
+                  "line_no": 1314,
+                  "contents": "'        self.processReconfig(newQV, designatedLeader, zk.getZxid(), true);'"
+                },
+                {
+                  "line_no": 1315,
+                  "contents": "'        if (designatedLeader != self.getId()) {'"
+                },
+                {
+                  "line_no": 1316,
+                  "contents": "'            allowedToCommit = false;'"
+                },
+                {
+                  "line_no": 1344,
+                  "contents": "'         * '"
+                },
+                {
+                  "line_no": 1414,
+                  "contents": "'            return \"COMMITANDACTIVATE\";           '"
+                }
+              ]
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Leader.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "modified_lines": [
+                523
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumCnxManager.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "modified_lines": [
+                151,
+                153,
+                155,
+                159,
+                176,
+                298,
+                331,
+                332,
+                340,
+                433,
+                436,
+                475,
+                563,
+                674,
+                749,
+                754,
+                848,
+                891,
+                895,
+                908,
+                1018,
+                1160,
+                1325,
+                1443,
+                1448,
+                1536,
+                1642,
+                1646,
+                1721,
+                1726,
+                1929,
+                1930,
+                2155,
+                2266,
+                2270,
+                2284,
+                2288,
+                2296,
+                2333,
+                2533,
+                1506
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "unidentified_lines": [
+
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 326,
+                  "contents": "'            else if (type == LearnerType.PARTICIPANT) sw.append(\":participant\");            '"
+                },
+                {
+                  "line_no": 334,
+                  "contents": "'            return sw.toString();       '"
+                },
+                {
+                  "line_no": 340,
+                  "contents": "'          return 42; // any arbitrary constant will do '"
+                },
+                {
+                  "line_no": 355,
+                  "contents": "'            QuorumServer qs = (QuorumServer)o;          '"
+                },
+                {
+                  "line_no": 356,
+                  "contents": "'            if ((qs.id != id) || (qs.type != type)) return false;   '"
+                },
+                {
+                  "line_no": 361,
+                  "contents": "'            if (!checkAddressesEqual(clientAddr, qs.clientAddr)) return false;                    '"
+                },
+                {
+                  "line_no": 1245,
+                  "contents": "'                        setObserver(null);  '"
+                },
+                {
+                  "line_no": 1317,
+                  "contents": "'       reconfigFlag = false;   '"
+                },
+                {
+                  "line_no": 1530,
+                  "contents": "'        Properties props = new Properties();        '"
+                },
+                {
+                  "line_no": 1585,
+                  "contents": "'    public void setLastSeenQuorumVerifier(QuorumVerifier qv, boolean writeToDisk){'"
+                },
+                {
+                  "line_no": 1711,
+                  "contents": "'     * '"
+                },
+                {
+                  "line_no": 1717,
+                  "contents": "'            LOG.info(SYNC_ENABLED + \"=\" + Boolean.getBoolean(SYNC_ENABLED));   '"
+                },
+                {
+                  "line_no": 1729,
+                  "contents": "'     * '"
+                },
+                {
+                  "line_no": 1837,
+                  "contents": "'    public synchronized void initConfigInZKDatabase() {   '"
+                },
+                {
+                  "line_no": 1918,
+                  "contents": "'           LOG.debug(\"Reconfig feature is disabled, skip reconfig processing.\");'"
+                },
+                {
+                  "line_no": 1958,
+                  "contents": "'               leaderChange = (myleaderInCurQV == null || myleaderInCurQV.addr == null || '"
+                },
+                {
+                  "line_no": 2007,
+                  "contents": "'   private boolean updateLearnerType(QuorumVerifier newQV) {        '"
+                },
+                {
+                  "line_no": 2038,
+                  "contents": "'   private boolean updateVote(long designatedLeader, long zxid){       '"
+                },
+                {
+                  "line_no": 2054,
+                  "contents": "'     * Here is the inconsistency scenario we try to solve by updating the peer '"
+                },
+                {
+                  "line_no": 2060,
+                  "contents": "'     * 1. z1, z2 were following z3 with peerEpoch to be 0xb8, the new epoch is '"
+                },
+                {
+                  "line_no": 2065,
+                  "contents": "'     * 3. z2 received notification from z1 and z3, which is following z3 with '"
+                },
+                {
+                  "line_no": 2068,
+                  "contents": "'     * 4. before z2 successfully connected to z3, z3 get restarted with new '"
+                },
+                {
+                  "line_no": 2071,
+                  "contents": "'     * 5. z2 will retry around a few round (default 5s) before giving up, '"
+                },
+                {
+                  "line_no": 2076,
+                  "contents": "'     * 8. z2 successfully connected to z3 before giving up, but with peer '"
+                },
+                {
+                  "line_no": 2079,
+                  "contents": "'     * 9. z1 get restarted, looking for leader with peer epoch 0xba, but cannot '"
+                },
+                {
+                  "line_no": 2080,
+                  "contents": "'     *    join, because z2 is reporting peer epoch 0xb8, while z3 is reporting '"
+                },
+                {
+                  "line_no": 2085,
+                  "contents": "'     * By updating the election vote after actually following leader, we can '"
+                },
+                {
+                  "line_no": 2089,
+                  "contents": "'     * Btw, the zxid and electionEpoch could be inconsistent because of the same '"
+                },
+                {
+                  "line_no": 2090,
+                  "contents": "'     * reason, it's better to update these as well after syncing with leader, but '"
+                },
+                {
+                  "line_no": 2091,
+                  "contents": "'     * that required protocol change which is non trivial. This problem is worked '"
+                },
+                {
+                  "line_no": 2092,
+                  "contents": "'     * around by skipping comparing the zxid and electionEpoch when counting for '"
+                },
+                {
+                  "line_no": 2098,
+                  "contents": "'     * '"
+                }
+              ]
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "modified_lines": [
+                151,
+                226
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "modified_lines": []
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "unidentified_lines": [
+                49
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 49,
+                  "contents": "'        super(logFactory, tickTime, minSessionTimeout, maxSessionTimeout, zkDb);'"
+                }
+              ]
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "modified_lines": [
+                                48,49,50,51,52,53,54,55
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/a97526b6e762cad5b5350394a8d6568278a3d5ce",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/a97526b6e762cad5b5350394a8d6568278a3d5ce/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "unidentified_lines": [
+              ],
+              "unidentified_contents": [
+                {
+                  "line_no": 49,
+                  "contents": "'              self.maxSessionTimeout, zkDb);'"
+                }
+              ]
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b a97526b6e762cad5b5350394a8d6568278a3d5ce -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java"
+          }
+        ]
+      },
+      {
+        "affected_version": "3.6.1",
+        "affected_version_sha": "104dcb3e3fb464b30c5186d229e00af9f332524b",
+        "affected_version_url": "https://github.com/apache/ZooKeeper/commit/104dcb3e3fb464b30c5186d229e00af9f332524b",
+        "fixing_commit_sha": "48f037fde4a1887ca4aed95919366a6bbae94260",
+        "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+        "checkout_command": "git checkout 48f037fde4a1887ca4aed95919366a6bbae94260",
+        "changes": [
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "modified_lines": [
+                408
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/PrepRequestProcessor.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "modified_lines": [
+                303,
+                355,
+                368,
+                369,
+                440
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/ZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "modified_lines": [
+                523
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/Learner.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "modified_lines": [
+                2155
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "modified_lines": [
+                151
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "modified_lines": [
+                52
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/QuorumZooKeeperServer.java"
+          },
+          {
+            "affected_version": {
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/104dcb3e3fb464b30c5186d229e00af9f332524b/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "modified_lines": [
+                55
+              ]
+            },
+            "fixing_commit": {
+              "fixing_commit_url": "https://github.com/apache/ZooKeeper/commit/48f037fde4a1887ca4aed95919366a6bbae94260",
+              "snapshot_url": "https://github.com/apache/ZooKeeper/tree/48f037fde4a1887ca4aed95919366a6bbae94260/zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "filename": "zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java",
+              "unidentified_lines": [],
+              "unidentified_contents": []
+            },
+            "diff_command": "git diff 104dcb3e3fb464b30c5186d229e00af9f332524b 48f037fde4a1887ca4aed95919366a6bbae94260 -- zookeeper-server/src/main/java/org/apache/zookeeper/server/quorum/ReadOnlyZooKeeperServer.java"
+          }
+        ]
+      }
+    ]
+  }
+}

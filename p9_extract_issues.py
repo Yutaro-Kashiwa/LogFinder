@@ -3,6 +3,9 @@ import json
 import sys
 from typing import List, Dict, Any
 
+from p7_create_test_data import issue_keys
+
+
 def extract_issues(json_file_path: str, issue_keys: List[str]) -> Dict[str, Any]:
     """
     Extract specific issues from the JSON file.
@@ -99,17 +102,7 @@ def print_issue_summary(extracted_data: Dict[str, Any]):
 
 def main():
     # Define the issues to extract
-    issue_keys = [
-        "ZOOKEEPER-4293",
-        "ZOOKEEPER-3829", 
-        "ZOOKEEPER-3769",
-        "ZOOKEEPER-3756",
-        "HBASE-11906",
-        "HBASE-17069",
-        "HBASE-14291",
-        "HBASE-20723",
-        "HBASE-24813"
-    ]
+
     
     # File paths
     input_file = "outputs/p8_issues_with_impacted_lines.json"

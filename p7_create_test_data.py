@@ -268,9 +268,7 @@ class GitDiffAnalyzer:
                 '--diff-algorithm=myers',  # GitHub's default
                 '-M50%', # GitHub's default
                 '--full-index',  # Show full object names
-                '--ignore-all-space',
-                '--ignore-space-at-eol',
-                '--ignore-blank-lines'
+                '-w'
             )
             
             # Parse the general diff to understand all changes
@@ -556,6 +554,8 @@ def process_issues(input_file: Path, output_file: Path, config: Config) -> None:
         project_results = {}
         
         for issue_key, issue_data in issues.items():
+            if not issue_key in issue_keys:
+                continue
             processed += 1
             print_progress(processed, total_issues, f"Processing {issue_key}")
             owner = "apache" # TODO: Fix
@@ -620,7 +620,17 @@ def main():
         sys.exit(1)
     
     process_issues(input_file, output_file, config)
-
+issue_keys = [
+    "ZOOKEEPER-4293",
+    "ZOOKEEPER-3829",
+    "ZOOKEEPER-3769",
+    "ZOOKEEPER-3756",
+    "HBASE-11906",
+    "HBASE-17069",
+    "HBASE-14291",
+    "HBASE-20723",
+    "HBASE-24813"
+]
 
 DEBUG_MODE = False
 if __name__ == "__main__":
